@@ -99,7 +99,7 @@ I don't have as much experience with this tool as I do with just looking at flam
 
 ## Traps
 
-Profiling for long periods of time can often generate too much data to be worthwhile.  Often you only want to start tracing during certain events when a service is misbehaving.  See the ./trap.sh script for an example of this kind of behavior.
+Profiling for long periods of time can often generate too much data to be worthwhile.  Often you only want to start tracing during certain events when a service is misbehaving.  See the `./trap.sh` script for an example.
 
 This script uses docker stats to only trigger profiling when the CPU usage dips below a threshold.  This is useful if you have a netcore application that is experiencing thread starvation and causing the service to stall out.
 
