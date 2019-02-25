@@ -1,14 +1,15 @@
-# netcore-kubenretes-profiling
+# netcore-kubernetes-profiling
 
 This repo is dedicated to scripts and notes for profiling netcore applications running in Kubernetes.  These scripts are designed to be run on the kuberntes node outside of the container as root.  Be warned they will install lttng, perf tools and probably other stuff.
 
-Most information comes from:
-https://github.com/dotnet/coreclr/blob/master/Documentation/project-docs/linux-performance-tracing.md
-and
-https://codeblog.dotsandbrackets.com/profiling-net-core-app-linux/
+Most information comes from [Linux Performance Tracing](https://github.com/dotnet/coreclr/blob/master/Documentation/project-docs/linux-performance-tracing.md) and [Profiling Net Core App Linux](https://codeblog.dotsandbrackets.com/profiling-net-core-app-linux/)
+
+Additionally Brendan Gregg's [Flamegraphs](https://github.com/brendangregg/FlameGraph) are used.
 
 ### 1. Run your netcore app in K8s
 Start a new pod that you want to profile with the following env vars set.
+
+#### Environment Variables
 
 ```
 env:
@@ -29,7 +30,9 @@ Passes events to the lttng daemon.
 **COMPlus_ZapDisable**
 Will force netcore runtime to be JITted.  This is normally not desirable, but it will cause the netcore runtime dll symbols to be included in the perf maps.
 
-There are other ways to do this: https://github.com/dotnet/coreclr/blob/master/Documentation/project-docs/linux-performance-tracing.md#resolving-framework-symbols
+There are other ways to do this if you are interested. https://github.com/dotnet/coreclr/blob/master/Documentation/project-docs/linux-performance-tracing.md#resolving-framework-symbols
+
+#### Hostdir mount
 
 Additionally, for lttng to work, you have to mount a hostdir.  This dir contains sockets that are used to communciate events to the lttng daemon.  I think.
 
@@ -51,7 +54,7 @@ SSH to the node and run `./setup.sh <pid>` with the pid of the process you want 
 
 - Move map files out of the container's `/tmp` directory to the host so perf can pick them up.
 - Download and run `perfcollect install`
-- Download Flamegraph Utilities (https://github.com/brendangregg/FlameGraph)
+- Download [Flamegraph Utilities](https://github.com/brendangregg/FlameGraph) to `./FlameGraph`
 
 ### 3. Profile!
 
@@ -82,7 +85,7 @@ lttng destroy
 babeltrace ./lttng-events
 ```
 
-Note that you are tracking pid 1.  This is because the process, in container, sees itself as pid 1.  (probably)
+Note that you are tracking pid 1.  This is because in most cases your netcore app will see itself as pid 1 in its container.
 
 #### Option 2 - Perfcollect and Perfview
 
@@ -90,11 +93,11 @@ The perfcollect script itself will collect both stack traces and events at the s
 
 `./perfcollect collect sample -collectsec 5`
 
-This will create a `sample.trace.zip` file which can then be viewed with PerfView.  https://github.com/Microsoft/perfview/blob/master/documentation/Downloading.md
+This will create a `sample.trace.zip` file which can then be viewed with [PerfView](https://github.com/Microsoft/perfview/blob/master/documentation/Downloading.md)
 
 I don't have as much experience with this tool as I do with just looking at flamegraphs, but seems to be a rich tool with a lot of options for analysis.
 
-#### Traps
+## Traps
 
 Profiling for long periods of time can often generate too much data to be worthwhile.  Often you only want to start tracing during certain events when a service is misbehaving.  See the ./trap.sh script for an example of this kind of behavior.
 
