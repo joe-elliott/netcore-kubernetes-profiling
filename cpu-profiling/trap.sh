@@ -21,11 +21,6 @@ while true; do
   count=$((count+1))
   
   ## Generate flamegraph
-  timelimit -t 1 perf record -p $pid -g
+  perf record -p $pid -g -- sleep 1
   perf script | FlameGraph/stackcollapse-perf.pl | FlameGraph/flamegraph.pl > $count.svg
-
-  ## -or-
-
-  ## Create trace zip
-  ./perfcollect collect sample -collectsec 5
 done
