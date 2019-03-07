@@ -2,9 +2,11 @@
 
 This collection of scripts is designed to support cpu profiling of a netcore application running in Kubernetes cluster.  It is designed to run on the node outside of the container.  Be warned they will install lttng, perf tools and probably other stuff.
 
-Most information comes from [Linux Performance Tracing](https://github.com/dotnet/coreclr/blob/master/Documentation/project-docs/linux-performance-tracing.md) and [Profiling Net Core App Linux](https://codeblog.dotsandbrackets.com/profiling-net-core-app-linux/)
+Most information pulled from:
 
-Additionally Brendan Gregg's [Flamegraphs](https://github.com/brendangregg/FlameGraph) are used.
+- [Linux Performance Tracing](https://github.com/dotnet/coreclr/blob/master/Documentation/project-docs/linux-performance-tracing.md)
+- [Profiling Net Core App Linux](https://codeblog.dotsandbrackets.com/profiling-net-core-app-linux/)
+- [Flamegraphs](https://github.com/brendangregg/FlameGraph)
 
 ### 1. Run your netcore app in K8s
 Start a new pod that you want to profile with the following env vars set.
