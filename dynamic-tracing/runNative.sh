@@ -11,6 +11,7 @@ DOTNET_FRAMEWORK_PATH=/usr/share/dotnet/shared/Microsoft.NETCore.App/$DOTNET_VER
 # todo: choose runtime version based on env
 RUNTIME_ID=linux-musl-x64  # or linux-x64
 
+
 # get dotnet sdk
 echo -- Grabbing netcore sdk $DOTNET_VERSION
 
@@ -36,8 +37,8 @@ else
 fi
 
 # generate native image and perf map
-APP_NATIVE_IMAGE=$APP_DLL.ni.dll
-./crossgen /JITPath $JIT_PATH /Platform_Assemblies_Paths $DOTNET_FRAMEWORK_PATH:$APP_DIR /out $APP_NATIVE_IMAGE $APP_DLL
+APP_NATIVE_IMAGE=${APP_DLL%.*}.ni.exe
+./crossgen /JITPath $JIT_PATH /Platform_Assemblies_Paths $DOTNET_FRAMEWORK_PATH:$APP_DIR $APP_DLL
 ./crossgen /Platform_Assemblies_Paths $DOTNET_FRAMEWORK_PATH:$APP_DIR /CreatePerfMap /tmp $APP_NATIVE_IMAGE
 
 # run native image
