@@ -55,13 +55,17 @@ else
 fi
 
 # generate native image and perf map
-APP_NATIVE_IMAGE=${APP_DLL%.*}.ni.exe
+APP_BASE_NAME=${APP_DLL%.*}
+APP_NATIVE_IMAGE=$APP_BASE_NAME.ni.exe
 ./crossgen /JITPath $JIT_PATH \
            /Platform_Assemblies_Paths $DOTNET_FRAMEWORK_PATH:$APP_DIR:$ADDITIONAL_PATHS \
            $APP_DLL
 ./crossgen /Platform_Assemblies_Paths $DOTNET_FRAMEWORK_PATH:$APP_DIR:$ADDITIONAL_PATHS \
            /CreatePerfMap /tmp \
            $APP_NATIVE_IMAGE
+
+cp $APP_BASE_NAME.deps.json $APP_BASE_NAME.ni.deps.json
+cp $APP_BASE_NAME.runtimeconfig.json $APP_BASE_NAME.ni.runtimeconfig.json
 
 # run native image
 dotnet $APP_NATIVE_IMAGE
