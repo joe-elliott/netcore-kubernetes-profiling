@@ -55,6 +55,7 @@ else
 fi
 
 # generate native image and perf map
+#   todo: support netcore dependencies
 APP_BASE_NAME=${APP_DLL%.*}
 APP_NATIVE_IMAGE=$APP_BASE_NAME.ni.exe
 ./crossgen /JITPath $JIT_PATH \
@@ -64,6 +65,7 @@ APP_NATIVE_IMAGE=$APP_BASE_NAME.ni.exe
            /CreatePerfMap /tmp \
            $APP_NATIVE_IMAGE
 
+# todo: support self contained builds.  this assumes a framework dependent build
 cp $APP_BASE_NAME.deps.json $APP_BASE_NAME.ni.deps.json
 cp $APP_BASE_NAME.runtimeconfig.json $APP_BASE_NAME.ni.runtimeconfig.json
 
