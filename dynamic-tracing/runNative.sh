@@ -69,5 +69,9 @@ APP_NATIVE_IMAGE=$APP_BASE_NAME.ni.exe
 cp $APP_BASE_NAME.deps.json $APP_BASE_NAME.ni.deps.json
 cp $APP_BASE_NAME.runtimeconfig.json $APP_BASE_NAME.ni.runtimeconfig.json
 
+# required for dynamic tracing from the host machine.  the pod must mount /app-profile on the host to
+#   /app-profile in container
+cp -r $APP_DIR/* /app-profile
+
 # run native image
-dotnet $APP_NATIVE_IMAGE
+dotnet /app-profile/$(basename $APP_NATIVE_IMAGE)
