@@ -15,9 +15,11 @@ The below very rough notes are an outline of how I have successfully traced netc
 ```
 
 ### generate native images using crossgen
-Crossgen is weirdly hard to find.  After running a publish I was able to find it in `/root/.nuget/packages/runtime.linux-x64.microsoft.netcore.app/2.2.2/tools/crossgen`.  
+Crossgen is available in the appropriate runtime netcore nuget package.  For instance if you have a 2.2.2 netcore app running on the `linux-musl-x64` runtime then you would download the following package.  Unzip the package and look in the `./tools` directory to find crossgen.
 
-The first command generates the native image.  The second generates a map file that we will use to determine the address at which to place a probe.
+https://www.nuget.org/packages/runtime.linux-musl-x64.Microsoft.NETCore.App/2.2.2
+
+After you get a hold of the appropriate crossgen run the following commands. The first command generates the native image.  The second generates a map file that we will use to determine the address at which to place a probe.
 
 ```
 ./crossgen /JITPath bin/libclrjit.so /Platform_Assemblies_Paths bin bin/app.dll
