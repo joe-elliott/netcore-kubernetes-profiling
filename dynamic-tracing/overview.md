@@ -41,18 +41,6 @@ perf script
 perf probe --del=*
 ```
 
-### runNative.sh
+### next steps
 
-This [script](./runNative.sh) takes a single parameter which is the path to a netcore CLR application dll.  It will then:
-
-- Pull crossgen
-- Generate the native image
-- Generate the perf map of the native image
-- Run the native image
-
-There is a lot of work to be done to support different container environments but these are the basic steps to start dynamically tracing netcore applications.  The idea is that this script would be injected into a container via configmap and run instead of the netcore application.  This script will then generate the native image and run it allowing for dynamic tracing of the process.
-
-### open questions/todo
-- create an automatic way to generate the native images and maps without recompiling code
-- find a way to get application and framework symbols
-- find and document ways to get arguments and return vals
+See [probles](./probes.md) for more information about the kinds of probes you can place.

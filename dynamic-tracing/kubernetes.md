@@ -44,3 +44,7 @@ WIP
       type: DirectoryOrCreate
     name: host-app
   ```
+
+### Next Steps
+
+See [probles](./probes.md) for more information about the kinds of probes you can place.
