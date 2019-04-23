@@ -62,7 +62,9 @@ dotnet 17273 [000] 1761930.225777: probe_sample:abs_1920: (7f784eea1920)
 The call stack is currently quite bad.  We might be able to improve this by running crossgen on dependent dlls and using mapgen to merge them into the perfmap. 
 
 ### Integer Parameters
-Parameters can be recorded by understanding which registers are used to pass various parameter types.  See System V AMD64 ABI in https://en.wikipedia.org/wiki/X86_calling_conventions.  Also, this (https://www.kernel.org/doc/Documentation/trace/kprobetrace.txt) is the best document I can find which shows what can be requested and how.
+Parameters can be recorded by understanding which registers are used to pass various parameter types.  See System V AMD64 ABI in https://en.wikipedia.org/wiki/X86_calling_conventions.  
+
+Also, even though it's for kprobes, this (https://www.kernel.org/doc/Documentation/trace/kprobetrace.txt) is the best document I can find which shows how to request and format registers and memory locations.
 
 ```
 # perf probe -x /app-profile/sample-netcore-app.ni.exe --add '0x1920 pos=%si:s32'
