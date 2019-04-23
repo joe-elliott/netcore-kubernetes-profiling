@@ -43,4 +43,4 @@ perf probe --del=*
 
 ### next steps
 
-See [probles](./probes.md) for more information about the kinds of probes you can place.
+See [probes](./probes.md) for more information about the kinds of probes you can place.
