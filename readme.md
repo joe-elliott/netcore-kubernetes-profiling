@@ -9,18 +9,15 @@ Generally these scripts are designed to be run on the Kubernetes node outside of
 
 ## todo
 
+- cpu profile
+  - add sample app example
 - dynamic tracing
-  - document getting retvals
-     perf probe -x /app-profile/sample-netcore-app.ni.exe --add '0x1920%return ret=$retval'
-     perf probe -x /app-profile/sample-netcore-app.ni.exe --add '0x1900%return ret=$retval'
-       'myfunc%return +0($retval):string
-   - Get params?
-     perf probe -x /app-profile/sample-netcore-app.ni.exe --add '0x1920 pos=%rdi'
    - figure out strings.  muck with offset?
+   - documentation cleanup
+   - improve call stacks
 - separate lttng events from cpu profiling
 - core dumps
 - bcc/bpf
-- give step by step instructions with the sample app
 
 ## to read
 

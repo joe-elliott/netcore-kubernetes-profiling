@@ -18,10 +18,8 @@ Copy map and files from the `/tmp` directory in the container to the root.  Use 
 ```
 
 ```
-# cat /tmp/sample-netcore-app.ni.\{d2e97439-0da1-4364-a46e-21d41f3d9078\}.map
-...
+# cat /tmp/sample-netcore-app.ni.\{d2e97439-0da1-4364-a46e-21d41f3d9078\}.map | grep calculateFibonacciValue
 0000000000021920 2b instance int32 [sample-netcore-app] sample_netcore_app.Providers.FibonacciProvider::calculateFibonacciValue(int32)
-...
 ```
 
 - Add the probe:
@@ -36,7 +34,7 @@ Copy map and files from the `/tmp` directory in the container to the root.  Use 
 
 - Exercise
 ```
-$ curl https://sample-netcore-app/api/fibonacci?pos=3
+$ curl http://sample-netcore-app/api/fibonacci?pos=3
 3
 ```
 
@@ -71,7 +69,7 @@ Also, even though it's for kprobes, this (https://www.kernel.org/doc/Documentati
 ```
 
 ```
-$ curl https://sample-netcore-app/api/fibonacci?pos=3
+$ curl http://sample-netcore-app/api/fibonacci?pos=3
 3
 ```
 
@@ -89,7 +87,7 @@ Failed to open /app-profile/sample-netcore-app.ni.exe, continuing without symbol
 ```
 
 ```
-$ curl https://profile.internal.qsrpolarisdev.net/api/fibonacci?pos=10
+$ curl http://sample-netcore-app/api/fibonacci?pos=10
 89
 ```
 
