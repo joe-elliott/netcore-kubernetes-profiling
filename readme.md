@@ -15,11 +15,17 @@ Generally these scripts are designed to be run on the Kubernetes node outside of
    - figure out strings.  muck with offset?
    - documentation cleanup
    - improve call stacks
+     - https://github.com/dotnet/ILMerge
+   - create script to pull perf maps, place them in /tmp and display all traceable methods with their native image offset
 - separate lttng events from cpu profiling
 - core dumps
 - bcc/bpf
 
 ## to read
 
-https://docs.microsoft.com/en-us/cpp/build/x64-calling-convention?view=vs-2017
-https://jvns.ca/blog/2017/07/05/linux-tracing-systems/
+- https://jvns.ca/blog/2017/07/05/linux-tracing-systems/
+- http://man7.org/linux/man-pages/man1/perf-probe.1.html
+- https://linux.die.net/man/1/perf-probe
+- https://www.kernel.org/doc/Documentation/trace/kprobetrace.txt
+- http://www.brendangregg.com/blog/2018-10-08/dtrace-for-linux-2018.html
+- http://www.brendangregg.com/blog/2019-01-01/learn-ebpf-tracing.html
