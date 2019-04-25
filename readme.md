@@ -12,10 +12,10 @@ Generally these scripts are designed to be run on the Kubernetes node outside of
 - cpu profile
   - add sample app example
 - dynamic tracing
-   - figure out strings.  muck with offset?
    - documentation cleanup
    - improve call stacks
      - https://github.com/dotnet/ILMerge
+     - Perf can't use perf maps for dlls?  bcc can?
    - create script to pull perf maps, place them in /tmp and display all traceable methods with their native image offset
 - separate lttng events from cpu profiling
 - core dumps

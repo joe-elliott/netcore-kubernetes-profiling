@@ -98,4 +98,42 @@ dotnet 22346 [000] 1762828.667743: probe_sample:abs_1920: (7f784eea1920 <- 7f785
 ```
 
 ### String Parameters
-???
+
+Identify the function to profile
+```
+# cat /tmp/sample-netcore-app.ni.\{d2e97439-0da1-4364-a46e-21d41f3d9078\}.map | grep calculateEcho
+0000000000021900 9 instance string [sample-netcore-app] sample_netcore_app.Providers.EchoProvider::calculateEchoValue(string)
+```
+
+Through trial and error I have found that the netcore string's length is a 32 bit int stored 8 bytes offset from the string pointer.  Note that we are using `(%si)` to dereference the value in RSI because this is a string type.  We are also pulling 128 bits of the string itself in two 64 bit chunks.
+
+Note that perf supports a string type directly.  However, this requires a null terminated string. 
+
+```
+perf probe -x /app-profile/sample-netcore-app.ni.exe --add '0x1900 len=+8(%si):u32 str=+12(%si):x64 str2=+20(%si)'
+```
+
+Exercise
+```
+$ curl http://sample-netcore-app/api/echo?echo=abc
+abc
+$ curl http://sample-netcore-app/api/echo?echo=abcdef
+abcdef
+$ curl http://sample-netcore-app/api/echo?echo=abcdefghi
+abcdefghi
+$ curl http://sample-netcore-app/api/echo?echo=abcdefghijkl
+abcdefghijkl
+$ curl http://sample-netcore-app/api/echo?echo=abcdefghijklmno
+abcdefghijklmno
+```
+
+Note that `str` and `str2`'s bytes are actually in reverse order.  I am unsure why this is.
+```
+# perf script
+Failed to open /app-profile/sample-netcore-app.ni.exe, continuing without symbols
+dotnet 24162 [000] 33591.658838: probe_sample:abs_1900: (7fc028bd1900) len=3 str=0x6300620061 str2=0x0
+dotnet 24162 [000] 33593.727911: probe_sample:abs_1900: (7fc028bd1900) len=6 str=0x64006300620061 str2=0x660065
+dotnet 24162 [000] 33595.926689: probe_sample:abs_1900: (7fc028bd1900) len=9 str=0x64006300620061 str2=0x68006700660065
+dotnet 24162 [000] 33598.230186: probe_sample:abs_1900: (7fc028bd1900) len=12 str=0x64006300620061 str2=0x68006700660065
+dotnet 24162 [000] 33600.630045: probe_sample:abs_1900: (7fc028bd1900) len=15 str=0x64006300620061 str2=0x68006700660065
+```
