@@ -30,3 +30,4 @@ Generally these scripts are designed to be run on the Kubernetes node outside of
 - https://www.kernel.org/doc/Documentation/trace/kprobetrace.txt
 - http://www.brendangregg.com/blog/2018-10-08/dtrace-for-linux-2018.html
 - http://www.brendangregg.com/blog/2019-01-01/learn-ebpf-tracing.html
+- https://www.joyfulbikeshedding.com/blog/2019-01-31-full-system-dynamic-tracing-on-linux-using-ebpf-and-bpftrace.html
