@@ -29,12 +29,6 @@ bpf += """
 
 """ % (maxLength * 2, maxLength * 2)
 
-bpf += """
-  char buf[%d];
-  bpf_probe_read(buf, %d * sizeof(char), (void *)(ctx->si + 11));
-
-""" % (maxLength * 2, maxLength * 2)
-
 pos = 0
 while pos < maxLength:
     bpf += """
