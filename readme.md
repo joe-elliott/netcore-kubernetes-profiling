@@ -18,7 +18,6 @@ Generally these scripts are designed to be run on the Kubernetes node outside of
      - https://github.com/dotnet/ILMerge
      - Perf can't use perf maps for dlls?  bcc can?
        - http://blogs.microsoft.co.il/sasha/2017/02/27/profiling-a-net-core-application-on-linux/
-   - create script to pull perf maps, place them in /tmp and display all traceable methods with their native image offset
    - review mapgen.py.  make sure we can get stack traces
 - separate lttng events from cpu profiling
 - core dumps
