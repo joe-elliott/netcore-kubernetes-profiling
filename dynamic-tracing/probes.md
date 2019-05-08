@@ -8,18 +8,12 @@ Copy map and files from the `/tmp` directory in the container to the root.  Use 
 
 ### Simple uprobes
 
-- Obtain exe offset:
+- Use [calc-offsets.py](./calc-offsets.py) to see method offsets for use in probing
 ```
-# cat /proc/31012/maps | grep ni.exe
-7f784ee80000-7f784ee81000 r-xp 00000000 ca:02 8388617                    /app-profile/sample-netcore-app.ni.exe
-7f784ee90000-7f784ee91000 rwxp 00000000 ca:02 8388617                    /app-profile/sample-netcore-app.ni.exe
-7f784eea0000-7f784eea3000 r-xp 00000000 ca:02 8388617                    /app-profile/sample-netcore-app.ni.exe
-7f784eeb2000-7f784eeb3000 r-xp 00002000 ca:02 8388617                    /app-profile/sample-netcore-app.ni.exe
-```
-
-```
-# cat /tmp/sample-netcore-app.ni.\{d2e97439-0da1-4364-a46e-21d41f3d9078\}.map | grep calculateFibonacciValue
-0000000000021920 2b instance int32 [sample-netcore-app] sample_netcore_app.Providers.FibonacciProvider::calculateFibonacciValue(int32)
+# python calc-offsets.py 31012 sample-netcore-app.ni.exe
+...
+offset: 1920 : instance int32 [sample-netcore-app] sample_netcore_app.Providers.FibonacciProvider::calculateFibonacciValue(int32)
+...
 ```
 
 - Add the probe:

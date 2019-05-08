@@ -32,6 +32,8 @@ Do the above for every dll you want to place probes on.
 
 Follow the instructions [here](https://blogs.microsoft.co.il/sasha/2018/02/08/dynamic-tracing-of-net-core-methods/) to calculate the address to place a probe at.  You will use the the native image perf maps in `/tmp` and the process memory map located at `/proc/<pid>/maps`.
 
+The helper script [calc-offsets.py](./calc-offsets.py) is also provided.
+
 ### Add a probe, trace it, view it and remove
 
 ```
