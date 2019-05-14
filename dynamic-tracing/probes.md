@@ -4,7 +4,7 @@
 
 Create the [dynamic-tracing.yaml](./dynamic-tracing.yaml) Kubernetes specs in your cluster and ssh to the appropriate node.  This will run a simple web service in your cluster:  https://github.com/joe-elliott/sample-netcore-app.
 
-Copy map and files from the `/tmp` directory in the container to the root.  Use [mapgen.py](./mapgen.py) to merge the native image perf map with the standard perf map.  Adapted from: https://gist.github.com/goldshtn/fe3f7c3b10ec7e5511ae755abaf52172.  At this point I mostly think that mapgen doesn't work.  There is a lot of work still to be done on building good stack traces in perf while dynamic tracing.
+Copy map and files from the `/tmp` directory in the container to the root.  ~Use [mapgen.py](./mapgen.py) to merge the native image perf map with the standard perf map.  Adapted from this [script](https://gist.github.com/goldshtn/fe3f7c3b10ec7e5511ae755abaf52172).~  At this point I mostly think that mapgen doesn't work.  There is a lot of work still to be done on building good stack traces in perf while dynamic tracing.
 
 ### Simple uprobes
 
