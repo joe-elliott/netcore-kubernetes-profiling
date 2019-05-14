@@ -3,6 +3,7 @@
 This is my personal collection of notes, scripts and techniques developed to help debug live netcore applications running in Kubernetes.  I am not an expert on these subjects and attempt to credit my sources and inspirations as much as possible.  Feel free to ask questions, make corrections or even submit pull requests.
 
 - [cpu profiling](cpu-profiling/readme.md)
+- [static tracepoints](static-tracepoints/readme.md)
 - [dynamic tracing perf](dynamic-tracing/readme.md)
 - [dynamic tracing bcc](dynamic-tracing-bcc)
 
@@ -12,6 +13,10 @@ Generally these scripts are designed to be run on the Kubernetes node outside of
 
 - cpu profile
   - add sample app example
+- static tracepoints
+  - add sample app example
+- perfcollect
+  - add sample app example
 - dynamic tracing
    - documentation cleanup
    - improve call stacks
@@ -19,7 +24,6 @@ Generally these scripts are designed to be run on the Kubernetes node outside of
      - Perf can't use perf maps for dlls?  bcc can?
        - http://blogs.microsoft.co.il/sasha/2017/02/27/profiling-a-net-core-application-on-linux/
    - review mapgen.py.  make sure we can get stack traces
-- separate lttng events from cpu profiling
 - core dumps
 - bcc/bpf
 
