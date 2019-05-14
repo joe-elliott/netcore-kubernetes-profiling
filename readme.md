@@ -5,7 +5,7 @@ This is my personal collection of notes, scripts and techniques developed to hel
 - [cpu profiling](cpu-profiling/readme.md)
 - [static tracepoints](static-tracepoints/readme.md)
 - [perfcollect](perfcollect/readme.md)
-  - Static Tracepoints
+  - Static Tracepoints and CPU Profiling
 - [dynamic tracing](dynamic-tracing/readme.md)
   - Includes guides on using both perf events and bcc
 
