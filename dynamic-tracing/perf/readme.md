@@ -1,3 +1,7 @@
+# perf
+
+The following perf examples are being generated using a sample application.  See [probes](../probes.md) for more information.
+
 - Add the probe:
 ```
 # perf probe -x /app-profile/sample-netcore-app.ni.exe --add '0x1920'
