@@ -5,8 +5,9 @@ This is my personal collection of notes, scripts and techniques developed to hel
 - [cpu profiling](cpu-profiling/readme.md)
 - [static tracepoints](static-tracepoints/readme.md)
 - [perfcollect](perfcollect/readme.md)
-- [dynamic tracing perf](dynamic-tracing/readme.md)
-- [dynamic tracing bcc](dynamic-tracing-bcc)
+  - Static Tracepoints
+- [dynamic tracing](dynamic-tracing/readme.md)
+  - Includes guides on using both perf events and bcc
 
 Generally these scripts are designed to be run on the Kubernetes node outside of the container as root.  The developers I support have latitude to build containers mostly how they would like and the container environment is unreliable.
 
@@ -24,9 +25,11 @@ Generally these scripts are designed to be run on the Kubernetes node outside of
      - https://github.com/dotnet/ILMerge
      - Perf can't use perf maps for dlls?  bcc can?
        - http://blogs.microsoft.co.il/sasha/2017/02/27/profiling-a-net-core-application-on-linux/
-   - review mapgen.py.  make sure we can get stack traces
+     - review mapgen.py.  make sure we can get stack traces
+   - bcc/bpf
+      - add sample app example
+      - flesh out instructions on installing and show examples
 - core dumps
-- bcc/bpf
 
 ## to read
 
