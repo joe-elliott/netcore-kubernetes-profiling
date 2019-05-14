@@ -4,6 +4,7 @@ This is my personal collection of notes, scripts and techniques developed to hel
 
 - [cpu profiling](cpu-profiling/readme.md)
 - [static tracepoints](static-tracepoints/readme.md)
+- [perfcollect](perfcollect/readme.md)
 - [dynamic tracing perf](dynamic-tracing/readme.md)
 - [dynamic tracing bcc](dynamic-tracing-bcc)
 
