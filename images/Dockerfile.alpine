@@ -1,0 +1,14 @@
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2.5-alpine
+
+WORKDIR /root
+
+RUN    echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories \
+    && apk update \
+    && apk upgrade \
+    && apk add bash \
+               ncurses \
+               perf \
+               git \
+               perl \
+    && rm -rf /var/cache/apk/* \
+    && git clone --depth=1 https://github.com/BrendanGregg/FlameGraph
