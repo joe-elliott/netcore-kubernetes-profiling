@@ -16,3 +16,4 @@ RUN    echo deb http://cloudfront.debian.net/debian testing main >> /etc/apt/sou
     && chmod +x ./perfcollect
 
 ADD setup.sh .
+RUN chmod +x setup.sh
