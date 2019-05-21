@@ -13,6 +13,8 @@ This is my personal collection of notes, scripts and techniques developed to hel
 
 Originally the repo was focused on running profiling tools on the node on which the pod was running.   Currently I am rewriting all of the guides to use a sidecar instead.  This approach should be signicantly more flexible and clean then the previous method.  
 
+Previously this repo was focused on executing these techniques from the node the application was running on.  If you are interested in that approach you can check it out [here](https://github.com/joe-elliott/netcore-kubernetes-profiling/tree/54bacfeecb33de6bbc590768af9c276efd1b4e4c).
+
 ## todo
 
 - cpu profile
