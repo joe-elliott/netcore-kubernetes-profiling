@@ -22,10 +22,12 @@ env:
   value: "1"
 ```
 
-**COMPlus_PerfMapEnabled**
+`COMPlus_PerfMapEnabled`
+
 Creates a perf map in `/tmp` that perf can read to symbolicate stack traces.  `./setup.sh` copies them from the container to the host system.
 
-**COMPlus_ZapDisable**
+`COMPlus_ZapDisable`
+
 Will force netcore runtime to be JITted.  This is normally not desirable, but it will cause the netcore runtime dll symbols to be included in the perf maps.  This will allow perf to gather symbols for both the runtime as well as your application.
 
 There are other ways to do this if you are interested. https://github.com/dotnet/coreclr/blob/master/Documentation/project-docs/linux-performance-tracing.md#resolving-framework-symbols
