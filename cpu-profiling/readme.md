@@ -50,7 +50,7 @@ Next discover the pid of the dotnet process you want to profile.  You will use i
 root         6  0.5  4.2 11940308 87108 ?      SLsl 02:46   0:06 dotnet /app/sample-netcore-app.dll
 ```
 
-**perf**
+#### perf and FlameGraphs
 
 You can generate an interactable flamegraph svg by running the following:
 ```
