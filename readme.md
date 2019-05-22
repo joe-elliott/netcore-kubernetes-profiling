@@ -20,8 +20,7 @@ Previously this repo was focused on executing these techniques from the node the
 ## todo
 
 - cpu profile
-  - add sample app example
-  - switch to sidecar
+  - update to 0.0.3 sidecar and test
 - static tracepoints
   - add sample app example
   - switch to sidecar
