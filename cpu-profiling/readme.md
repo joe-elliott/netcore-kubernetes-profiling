@@ -1,6 +1,6 @@
 # cpu-profiling
 
-This collection of scripts is designed to support cpu profiling of a netcore application running in Kubernetes cluster.  It is designed to run on the node outside of the container.  Be warned they will install lttng, perf tools and probably other stuff.
+This collection of scripts is designed to support cpu profiling of a netcore application running in Kubernetes cluster.  The tools are designed to run in a sidecar next to the pod you want to debug.
 
 Most information pulled from:
 
