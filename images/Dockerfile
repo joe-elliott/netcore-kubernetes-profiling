@@ -10,6 +10,7 @@ RUN    echo deb http://cloudfront.debian.net/debian testing main >> /etc/apt/sou
             lttng-tools \
             liblttng-ust-dev \
             linux-tools \
+            procps \
     && rm -rf /var/lib/apt/lists/* \
     && git clone --depth=1 https://github.com/BrendanGregg/FlameGraph \
     && curl -OL https://aka.ms/perfcollect \

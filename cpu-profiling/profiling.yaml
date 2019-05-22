@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-netcore-app
+spec:
+  selector:
+    app: sample-netcore-app
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8080
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: profile-dynamic-tracing
+  labels:
+    app: sample-netcore-app
+spec:
+  shareProcessNamespace: true
+  containers:
+  - name: sample-netcore-app
+    image: joeelliott/sample-netcore-app:v1.0.0-2.2.5
+    imagePullPolicy: IfNotPresent
+    env:
+    - name: COMPlus_PerfMapEnabled 
+      value: "1"
+    - name: COMPlus_ZapDisable
+      value: "1"
+    - name: ASPNETCORE_URLS
+      value: http://*:8080
+    volumeMounts:
+    - mountPath: /tmp
+      name: tmp      
+  - name: profile-sidecar
+    image: joeelliott/netcore-debugging-tools:v0.0.2-2.2.5
+    imagePullPolicy: IfNotPresent
+    args:
+    - sleep
+    - infinity
+    volumeMounts:
+    - mountPath: /tmp
+      name: tmp
+  volumes:
+  - name: tmp
+    emptyDir: {}

@@ -5,6 +5,8 @@
 #
 #    /usr/bin/perf: line 13: exec: perf_4.15: not found
 #    E: linux-perf-4.15 is not installed.
+apt-get update
+
 #
 # This is because the version of perf installed does not match the kernel version reported by
 #  `uname -r`.  See /usr/bin/perf for more info.  In the past I have had success finding the version
