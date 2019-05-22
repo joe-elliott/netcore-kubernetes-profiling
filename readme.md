@@ -5,6 +5,7 @@ This is my personal collection of notes, scripts and techniques developed to hel
 - [images](./images)
   - A collection of Dockerfiles to build sidecar profiling containers.
 - [cpu profiling](./cpu-profiling)
+  - Building FlameGraphs from perf data
 - [static tracepoints](static-tracepoints/readme.md)
 - [perfcollect](perfcollect/readme.md)
   - Static Tracepoints and CPU Profiling
