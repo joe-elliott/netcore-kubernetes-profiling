@@ -64,7 +64,9 @@ Exit the container and copy it locally
 kubectl cp default/profile-dynamic-tracing:flamegraph.svg flamegraph.svg -c profile-sidecar
 ```
 
-Enjoy your [flamegraph](../flamegraph.svg)!
+Enjoy your flamegraph
+
+![flamegraph](./flamegraph.svg)
 
 ## Traps
 
