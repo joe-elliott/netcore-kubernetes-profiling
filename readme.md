@@ -4,12 +4,14 @@ This is my personal collection of notes, scripts and techniques developed to hel
 
 - [images](./images)
   - A collection of Dockerfiles to build sidecar profiling containers.
-- [cpu profiling](cpu-profiling)
+- [cpu profiling](./cpu-profiling)
 - [static tracepoints](static-tracepoints/readme.md)
 - [perfcollect](perfcollect/readme.md)
   - Static Tracepoints and CPU Profiling
 - [dynamic tracing](dynamic-tracing/readme.md)
   - Includes guides on using both perf events and bcc
+- [kernel interactions](./kernel-interactions)
+  - The containers, tools, and the kernel can sometimes have weird interactions.  Documenting those interactions as well as work around here.
 
 Originally the repo was focused on running profiling tools on the node on which the pod was running.   Currently I am rewriting all of the guides to use a sidecar instead.  This approach should be signicantly more flexible and clean then the previous method.  
 
