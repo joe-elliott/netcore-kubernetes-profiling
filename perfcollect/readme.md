@@ -2,12 +2,12 @@
 
 [perfcollect](https://aka.ms/perfcollect) and [Perfview](https://github.com/Microsoft/perfview/blob/master/documentation/Downloading.md) are a collection of tools provided by Microsoft to analyze the behavior of running netcore processes.
 
-The following guide will walk you through using these tools to gather events and perform cpu profiling on a live container running in Kubernetes.  Note that we will be performing our data collection from the node that the container is running on.
+The following guide will walk you through using these tools to gather events and perform cpu profiling on a live container running in Kubernetes.  Note that we will be performing our data collection from a sidecar deployed in the same pod as the container we want to debug.
 
-Check out these guides on [cpu profiling](../cpu-profiling/readme.md) and [static-tracepoints](../cpu-profiling/readme.md) without using PerfView.
+Check out these guides on [cpu profiling](../cpu-profiling) and [static-tracepoints](../static-tracepoints) without using PerfView.
 
-### 1. Run your netcore app in K8s
-Start a new pod that you want to profile with the following env vars set.
+## Run your netcore app in K8s
+Create your pod with a [debugging sidecar](https://cloud.docker.com/repository/docker/joeelliott/netcore-debugging-tools/).  The rest of this guide will use [perfcollect.yaml](./perfcollect.yaml) which runs a sidecar next to a simple [sample app](https://github.com/joe-elliott/sample-netcore-app).
 
 #### Environment Variables
 
@@ -21,33 +21,22 @@ env:
   value: "1"
 ```
 
-**COMPlus_PerfMapEnabled**
-Creates a perf map in `/tmp` that perf can read to symbolicate stack traces.  `./setup.sh` copies them from the container to the host system.
+`COMPlus_EnableEventLog`  Instructs netcore to produce LTTng events. 
 
-**COMPlus_EnableEventLog**
-Instructs netcore to produce LTTng events. 
+`COMPlus_PerfMapEnabled` creates a perf map in `/tmp` that perf can read to symbolicate stack traces.  `./setup.sh` copies them from the container to the host system.
 
-**COMPlus_ZapDisable**
-Will force netcore runtime to be JITted.  This is normally not desirable, but it will cause the netcore runtime dll symbols to be included in the perf maps.  This will allow perf to gather symbols for both the runtime as well as your application.
+`COMPlus_ZapDisable` will force netcore runtime to be JITted.  This is normally not desirable, but it will cause the netcore runtime dll symbols to be included in the perf maps.  This will allow perf to gather symbols for both the runtime as well as your application.
 
 There are other ways to do this if you are interested. https://github.com/dotnet/coreclr/blob/master/Documentation/project-docs/linux-performance-tracing.md#resolving-framework-symbols
 
-#### Hostdir mount
+#### Mount /tmp
+By sharing /tmp as an empty directory the debugging sidecar can easily access perf maps created by the netcore application.
 
-Additionally, for lttng to work, you have to mount a hostdir.  This dir contains sockets that are used to communciate events to the lttng daemon.  I think.
+#### Mount /var/run/lttng
+LTTng uses a number of files in this folder to communicate with the running process.  Sharing this folder between containers allows your sidecar to pick up events produced by your netcore app.
 
-```
-volumes:
-  - name: lttng
-    hostPath:
-      type: DirectoryOrCreate
-      path: /var/run/lttng
-containers:
-  - name: netcoreapp
-    volumeMounts:
-    - mountPath: /var/run/lttng
-      name: lttng
-```
+#### shareProcessNamespace
+Setting `shareProcessNamespace` to true allows the sidecar to easily access the process you want to debug.
 
 ### 2. Run ./setup.sh
 SSH to the node and run [`./setup.sh <pid on host>`](./setup.sh) with the pid of the process you want to profile as root.  This script will
@@ -55,18 +44,28 @@ SSH to the node and run [`./setup.sh <pid on host>`](./setup.sh) with the pid of
 - Move map files out of the container's `/tmp` directory to the host so perf can pick them up.
 - Download and run `perfcollect install`
 
-### 3. Profile!
+## Profile!
 
-The perfcollect script itself will collect both stack traces and events at the same time.  The below will collect for 5 seconds.  If you leave the `collectsec` argument off you will need to Ctrl+C to interrupt `perfcollect`
+Exec into the sidecar and run `./setup.sh`.  The tools we are using are very tightly coupled with the kernel version you want to debug.  Because of this we can't install all of the tools we need directly in the container.  They must be installed once the container is running and the kernel version is known.  `./setup.sh` will attempt to install the rest.  If you are having issues refer to the notes on [kernel interactions](../kernel-interactions) with the container.
 
-`./perfcollect collect sample -collectsec 5`
+```
+kubectl exec -it -c profile-sidecar sample-netcore-app bash
+# ./setup.sh
+```
 
-This will create a `sample.trace.zip` file which can then be viewed with [PerfView](https://github.com/Microsoft/perfview/blob/master/documentation/Downloading.md)
+Next discover the pid of the dotnet process you want to profile.  You will use it in the below examples.
 
-I don't have as much experience with this tool as I do with just looking at flamegraphs, but seems to be a rich tool with a lot of options for analysis.
+```
+# ps aux | grep dotnet
+root         6  0.5  4.2 11940308 87108 ?      SLsl 02:46   0:06 dotnet /app/sample-netcore-app.dll
+```
 
-## Weirdness
+The perfcollect script itself will collect both stack traces and events at the same time.  The below will collect for 5 seconds.  If you leave the `collectsec` argument off you will need to Ctrl+C to interrupt `perfcollect`.  This will create a `sample.trace.zip` file which can then be viewed with [PerfView](https://github.com/Microsoft/perfview/blob/master/documentation/Downloading.md)
 
-- Lttng events are registered for pid 1, but perf will be running against a different pid.  Unsure if this has negative impacts on Perfview.  This has prevented me from running perfcollect in pid mode and getting usable results.
-- These scripts install perf tools and lttng on your node.  Be warned.
-- These scripts leave a perfmap in `/tmp`.  You should probably clean that up.
+`./perfcollect collect sample -collectsec 5 -pid <pid>`
+
+Exit the container and copy it locally
+
+```
+kubectl cp default/sample-netcore-app:sample.trace.zip sample.trace.zip -c profile-sidecar
+```

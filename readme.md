@@ -22,8 +22,7 @@ Previously this repo was focused on executing these techniques from the node the
 ## todo
 
 - perfcollect
-  - add sample app example
-  - switch to sidecar
+  - add perfview screenshots
 - dynamic tracing
    - documentation cleanup
    - switch to sidecar
