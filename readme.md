@@ -8,7 +8,7 @@ This is my personal collection of notes, scripts and techniques developed to hel
   - Building FlameGraphs from perf data
 - [static tracepoints](./static-tracepoints)
   - Recording and viewing LTTng events
-- [perfcollect](perfcollect/readme.md)
+- [perfcollect](./perfcollect)
   - Static Tracepoints and CPU Profiling
 - [dynamic tracing](dynamic-tracing/readme.md)
   - Includes guides on using both perf events and bcc
