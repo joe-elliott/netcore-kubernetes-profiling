@@ -21,8 +21,6 @@ Previously this repo was focused on executing these techniques from the node the
 
 ## todo
 
-- cpu profile
-  - update to 0.0.3 sidecar and test
 - perfcollect
   - add sample app example
   - switch to sidecar
