@@ -56,7 +56,7 @@ You can generate an interactable flamegraph svg by running the following:
 ```
 perf record -g -p <pid>
 <Ctrl+C>
-    perf script | FlameGraph/stackcollapse-perf.pl | FlameGraph/flamegraph.pl > flamegraph.svg
+perf script | FlameGraph/stackcollapse-perf.pl | FlameGraph/flamegraph.pl > flamegraph.svg
 ```
 
 Exit the container and copy it locally
