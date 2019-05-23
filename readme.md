@@ -7,6 +7,7 @@ This is my personal collection of notes, scripts and techniques developed to hel
 - [cpu profiling](./cpu-profiling)
   - Building FlameGraphs from perf data
 - [static tracepoints](static-tracepoints/readme.md)
+  - Recording and viewing LTTNG events
 - [perfcollect](perfcollect/readme.md)
   - Static Tracepoints and CPU Profiling
 - [dynamic tracing](dynamic-tracing/readme.md)
