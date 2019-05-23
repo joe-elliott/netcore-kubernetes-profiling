@@ -1,11 +1,15 @@
 # static-tracepoints
 
-Recording static tracepoints produced by the netcore framework is actually quite easy.   Netcore is already instrumented to produce framework level events such as garbage collection or thread creation.
+Recording static tracepoints produced by the netcore framework is actually quite easy.   Netcore is already instrumented to produce framework level events such as garbage collection and thread creation.
 
-If you are interested in both profiling and recording LTTng events see [perfcollect](../perfcollect/readme.md).  This documentation will walk you through generating data for the PerfView utility.
+If you are interested in both profiling and recording LTTng events see [perfcollect](../perfcollect).  This documentation will walk you through generating data for the PerfView utility.
 
-### 1. Run your netcore app in K8s
-Start a new pod that you want to profile with the following env vars set.
+## Run your netcore app in K8s
+Create your pod with a [debugging sidecar](https://cloud.docker.com/repository/docker/joeelliott/netcore-debugging-tools/).  The rest of this guide will use [static-tracepoints.yaml](./static-tracepoints.yaml) which runs a sidecar next to a simple [sample app](https://github.com/joe-elliott/sample-netcore-app).
+
+
+#### Environment Variables
+Set the following environment variables for your main process.
 
 ```
 env:
@@ -13,53 +17,47 @@ env:
   value: "1"
 ```
 
-**COMPlus_EnableEventLog**
-Instructs netcore to produce LTTng events. 
+`COMPlus_EnableEventLog`  Instructs netcore to produce LTTng events. 
 
-#### Hostdir mount
+#### Mount /var/run/lttng
+LTTng uses a number of files in this folder to communicate with the running process.  Sharing this folder between containers allows your sidecar to pick up events produced by your netcore app.
 
-Additionally, for lttng to work, you have to mount a hostdir.  This dir contains sockets that are used to communciate events to the lttng daemon.  I think.
+#### shareProcessNamespace
+Setting `shareProcessNamespace` to true allows the sidecar to easily access the process you want to debug.
 
-```
-volumes:
-  - name: lttng
-    hostPath:
-      type: DirectoryOrCreate
-      path: /var/run/lttng
-containers:
-  - name: netcoreapp
-    volumeMounts:
-    - mountPath: /var/run/lttng
-      name: lttng
-```
+## Collect Events!
 
-### 2. Install LTTng
-SSH to the node and install LTTng.  An easy way to do this would be to use `perfcollect`.  Be warned this installs a handful of tools related to linux tracing and debugging.
+Exec into the sidecar and discover the pid of the dotnet process you want to profile.  You will use it in the below examples.
 
 ```
-curl -OL https://aka.ms/perfcollect
-chmod +x perfcollect
-./perfcollect install
+kubectl exec -it -c profile-sidecar sample-netcore-app bash
+# ps aux | grep dotnet
+root         7  0.4  3.9 11797376 80500 ?      SLsl 00:55   0:01 dotnet /app/sample-netcore-app.dll
 ```
 
-### 3. Collect Events
-
-You can view raw events passed to lttng using:
+Start an LTTng session and collect events.
 
 ```
 lttng create session --output=./lttng-events
 lttng enable-event --userspace --all
-lttng track --pid=1 -u
+lttng track --pid=<pid> -u
 lttng start
 # events are being recored now
 lttng stop
 lttng destroy
-
-babeltrace ./lttng-events
 ```
 
-Note that the above example is tracking pid 1.  This is because in most cases your netcore app will see itself as pid 1 in its container.  Adjust if necessary.
+Dump them to the terminal.
 
-## Weirdness
+```
+babeltrace ./lttng-events
 
-- These scripts install perf tools and lttng on your node.  Be warned.
+...
+[01:00:37.588459510] (+0.000000481) sample-netcore-app DotNETRuntime:GCSampledObjectAllocationHigh: { cpu_id = 0 }, { Address = 139897548412480, TypeID = 139906679802464, ObjectCountForTypeSample = 1, TotalSizeForTypeSample = 122, ClrInstanceID = 0 }
+[01:00:37.588460717] (+0.000001207) sample-netcore-app DotNETRuntime:EventSource: { cpu_id = 0 }, { EventID = 25, EventName = "SetActivityId", EventSourceName = "System.Threading.Tasks.TplEventSource", Payload = "{\"NewId\":00000000-0000-0000-0000-000000000000}" }
+[01:00:37.588523375] (+0.000062658) sample-netcore-app DotNETRuntime:ThreadPoolWorkerThreadWait: { cpu_id = 0 }, { ActiveWorkerThreadCount = 2, RetiredWorkerThreadCount = 0, ClrInstanceID = 0 }
+[01:00:37.588524339] (+0.000000964) sample-netcore-app DotNETRuntime:ThreadPoolWorkerThreadWait: { cpu_id = 0 }, { ActiveWorkerThreadCount = 2, RetiredWorkerThreadCount = 0, ClrInstanceID = 0 }
+[01:00:38.586440792] (+0.997916453) sample-netcore-app DotNETRuntime:GCSampledObjectAllocationHigh: { cpu_id = 0 }, { Address = 139897548412608, TypeID = 139906670816858, ObjectCountForTypeSample = 1, TotalSizeForTypeSample = 48, ClrInstanceID = 0 }
+[01:00:38.586445343] (+0.000004551) sample-netcore-app DotNETRuntime:GCSampledObjectAllocationHigh: { cpu_id = 0 }, { Address = 139897548412656, TypeID = 139906679813328, ObjectCountForTypeSample = 1, TotalSizeForTypeSample = 24, ClrInstanceID = 0 }
+...
+```

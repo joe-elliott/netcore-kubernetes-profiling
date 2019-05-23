@@ -7,7 +7,7 @@ This is my personal collection of notes, scripts and techniques developed to hel
 - [cpu profiling](./cpu-profiling)
   - Building FlameGraphs from perf data
 - [static tracepoints](static-tracepoints/readme.md)
-  - Recording and viewing LTTNG events
+  - Recording and viewing LTTng events
 - [perfcollect](perfcollect/readme.md)
   - Static Tracepoints and CPU Profiling
 - [dynamic tracing](dynamic-tracing/readme.md)
@@ -23,9 +23,6 @@ Previously this repo was focused on executing these techniques from the node the
 
 - cpu profile
   - update to 0.0.3 sidecar and test
-- static tracepoints
-  - add sample app example
-  - switch to sidecar
 - perfcollect
   - add sample app example
   - switch to sidecar
