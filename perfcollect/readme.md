@@ -62,10 +62,16 @@ root         6  0.5  4.2 11940308 87108 ?      SLsl 02:46   0:06 dotnet /app/sam
 
 The perfcollect script itself will collect both stack traces and events at the same time.  The below will collect for 5 seconds.  If you leave the `collectsec` argument off you will need to Ctrl+C to interrupt `perfcollect`.  This will create a `sample.trace.zip` file which can then be viewed with [PerfView](https://github.com/Microsoft/perfview/blob/master/documentation/Downloading.md)
 
-`./perfcollect collect sample -collectsec 5 -pid <pid>`
+`./perfcollect collect sample -collectsec 5`
 
 Exit the container and copy it locally
 
 ```
 kubectl cp default/sample-netcore-app:sample.trace.zip sample.trace.zip -c profile-sidecar
 ```
+
+## Warnings
+
+Perfcollect is bad about swallowing errors.  If you pull your sample.trace.zip locally and are not seeing stack traces I would recommend reviewing the `perfcollect.log` file contained in the zip.  It will show you the raw perf commands run and their outputs.
+
+For example perfcollect supports a `-pid` parameter, but if you pass it perfcollect will fail silently:  https://github.com/dotnet/corefx-tools/issues/84.
