@@ -15,5 +15,7 @@ RUN    echo deb http://cloudfront.debian.net/debian testing main >> /etc/apt/sou
     && curl -OL https://aka.ms/perfcollect \
     && chmod +x ./perfcollect
 
-ADD setup.sh .
+ADD setup.sh \
+    setup.4.15.sh \
+    ./
 RUN chmod +x setup.sh
