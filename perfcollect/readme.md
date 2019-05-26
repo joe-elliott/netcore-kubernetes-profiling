@@ -70,7 +70,7 @@ Exit the container and copy it locally
 kubectl cp default/sample-netcore-app:sample.trace.zip sample.trace.zip -c profile-sidecar
 ```
 
-## Warnings
+### Warning
 
 Perfcollect is bad about swallowing errors.  If you pull your sample.trace.zip locally and are not seeing stack traces I would recommend reviewing the `perfcollect.log` file contained in the zip.  It will show you the raw perf commands run and their outputs.
 
