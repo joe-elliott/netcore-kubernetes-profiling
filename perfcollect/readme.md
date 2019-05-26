@@ -75,3 +75,14 @@ kubectl cp default/sample-netcore-app:sample.trace.zip sample.trace.zip -c profi
 Perfcollect is bad about swallowing errors.  If you pull your sample.trace.zip locally and are not seeing stack traces I would recommend reviewing the `perfcollect.log` file contained in the zip.  It will show you the raw perf commands run and their outputs.
 
 For example perfcollect supports a `-pid` parameter, but if you pass it perfcollect will fail silently:  https://github.com/dotnet/corefx-tools/issues/84.
+
+
+## PerfView
+
+Open up your `sample.trace.zip` in PerfView and explore some of the functionality.  Some sample screenshots below.
+
+![Call Tree](./calltree.png)
+
+![Events](./events.png)
+
+![FlameGraph](./flamegraph.png)
