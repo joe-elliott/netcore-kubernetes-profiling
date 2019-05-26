@@ -1,28 +1,20 @@
 apiVersion: v1
-kind: Service
-metadata:
-  name: profile-sample-netcore-app
-spec:
-  ports:
-    - port: 80
-      targetPort: 8080
-  selector:
-    app: sample-netcore-app
----
-apiVersion: v1
 kind: Pod
 metadata:
-  name: profile-dynamic-tracing
+  name: sample-netcore-app
   labels:
     app: sample-netcore-app
 spec:
+  shareProcessNamespace: true
   containers:
   - env:
     - name: COMPlus_PerfMapEnabled
       value: "1"
     - name: ASPNETCORE_URLS
       value: http://*:8080
-    image: joeelliott/sample-netcore-app
+    securityContext:
+      privileged: true
+    image: joeelliott/sample-netcore-app:v1.0.0-2.2.5
     imagePullPolicy: IfNotPresent
     name: sample-netcore-app
     command: ["/run-native/runNative.sh"]
@@ -31,16 +23,37 @@ spec:
     - mountPath: /run-native
       name: run-native-volume
     - mountPath: /app-profile
-      name: host-app
+      name: app
+    - mountPath: /tmp
+      name: tmp
+  - name: profile-sidecar
+    image: joeelliott/netcore-debugging-tools:v0.0.7-2.2.5
+    imagePullPolicy: IfNotPresent
+    securityContext:
+      privileged: true
+    args:
+    - sleep
+    - infinity
+    volumeMounts:
+    - mountPath: /app-profile
+      name: app
+    - mountPath: /tmp
+      name: tmp
+    - mountPath: /sys
+      name: sys
   volumes:
+  - name: tmp
+    emptyDir: {}
   - configMap:
       defaultMode: 0740
       name: profile-run-native
     name: run-native-volume
+  - emptyDir: {}
+    name: app
   - hostPath:
-      path: /app-profile
-      type: DirectoryOrCreate
-    name: host-app
+      path: /sys
+      type: Directory
+    name: sys
 ---
 apiVersion: v1
 kind: ConfigMap

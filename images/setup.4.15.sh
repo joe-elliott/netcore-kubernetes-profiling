@@ -10,3 +10,5 @@ apt-get install -y --allow-downgrades \
                 linux-headers-4.15 \
                 linux-perf=4.15+90
 
+ln -s /lib/modules/4.15.0-1-amd64 /lib/modules/4.15.0
+

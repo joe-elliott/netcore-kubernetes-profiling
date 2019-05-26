@@ -11,3 +11,5 @@ A [setup script](../images/setup.4.15.sh) has been provided for 4.15.  Note that
 ```
 echo deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/20180222 sid main contrib >> /etc/apt/sources.list
 ```
+
+Using this technique everything except bcc will work.
