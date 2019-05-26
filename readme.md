@@ -36,8 +36,6 @@ Previously this repo was focused on executing these techniques from the node the
       - flesh out instructions on installing and show examples
       - switch to sidecar
 - core dumps
-- add notes regarding the interaction between the kernel and the debugging tools in container.  
-  - test techniques on multiple kernels
 
 ## to read
 
