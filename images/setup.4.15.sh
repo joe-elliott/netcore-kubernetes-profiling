@@ -6,7 +6,7 @@ apt-get update
 
 ./perfcollect install
 
-apt-get install -y \
+apt-get install -y --allow-downgrades \
                 linux-headers-4.15 \
                 linux-perf=4.15+90
 
