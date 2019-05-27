@@ -18,7 +18,7 @@ This is my personal collection of notes, scripts and techniques developed to hel
 - [images](./images)
   - A collection of Dockerfiles to build sidecar profiling containers.
 - [kernel interactions](./kernel-interactions)
-  - The containers, tools, and the kernel can sometimes have weird interactions.  Documenting those interactions as well as work around here.
+  - The containers, tools, and the kernel can sometimes have weird interactions.  This document contains information on how to get these tools working on a variety of kernel versions.
 - [todo](./todo)
   - Future work for this repo.
 
