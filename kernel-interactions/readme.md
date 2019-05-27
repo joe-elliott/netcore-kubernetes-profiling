@@ -12,4 +12,12 @@ A [setup script](../images/setup.4.15.sh) has been provided for 4.15.  Note that
 echo deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/20180222 sid main contrib >> /etc/apt/sources.list
 ```
 
-Using this technique everything except bcc will work.
+Using this technique everything except dynamic tracing seems to work.
+
+## Kernel 4.9
+
+After running `setup.sh` run the following to install the correct version of perf.
+
+```
+apt-get install linux-perf-4.9
+```
