@@ -1,7 +1,7 @@
 #! /bin/sh
 #
-# genNative.sh <app dll> <sdk version>
-#    ./genNative /app/app.dll
+# runNative.sh <app dll> <sdk version>
+#    ./runNative /app/app.dll
 #
 
 APP_DLL=$1
