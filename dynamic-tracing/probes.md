@@ -8,7 +8,7 @@ Copy map and files from the `/tmp` directory in the container to the root.  ~Use
 
 ### Simple uprobes
 
-- Use [calc-offsets.py](./calc-offsets.py) to see method offsets for use in probing
+- Use [calc-offsets.py](../images/calc-offsets.py) to see method offsets for use in probing
 ```
 # python calc-offsets.py 31012 sample-netcore-app.ni.exe
 ...
