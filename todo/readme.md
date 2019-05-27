@@ -5,8 +5,6 @@
 - add animated console thing
 - include info on the main page about natively profiling
 - dynamic tracing
-   - documentation cleanup
-   - switch to sidecar
    - improve call stacks
      - https://github.com/dotnet/ILMerge
      - Perf can't use perf maps for dlls?  bcc can?
@@ -16,7 +14,6 @@
       - improve and consolidate scripts to dump params/rets
       - add sample app example
       - flesh out instructions on installing and show examples
-      - switch to sidecar
 - core dumps
 - test these examples on other linux distros and kernel versions
 - build sidecars for other netcore versions 
