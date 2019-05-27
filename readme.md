@@ -33,6 +33,7 @@ Previously this repo was focused on executing these techniques from the node the
        - http://blogs.microsoft.co.il/sasha/2017/02/27/profiling-a-net-core-application-on-linux/
      - review mapgen.py.  make sure we can get stack traces
    - bcc/bpf
+      - improve and consolidate scripts to dump params/rets
       - add sample app example
       - flesh out instructions on installing and show examples
       - switch to sidecar
