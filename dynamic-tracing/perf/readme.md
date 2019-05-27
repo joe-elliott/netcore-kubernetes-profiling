@@ -1,45 +1,48 @@
 # perf
 
-The following perf examples are being generated using a sample application.  See [probes](../probes.md) for more information.
+This document shows step by step examples on using both perf to dynamically trace [this application](https://github.com/joe-elliott/sample-netcore-app) in your cluster with [the sidecar](https://hub.docker.com/r/joeelliott/netcore-debugging-tools) generated from this repo.
 
-- Add the probe:
+See [probes](../probes.md) for more information on setup.
+
+#### Add the probe
 ```
 # perf probe -x /app-profile/sample-netcore-app.ni.exe --add '0x1920'
 ```
 
-- Record
+#### Record
 ```
 # perf record -e probe_sample:* -ag -- sleep 10
 ```
 
-- Exercise
+#### Exercise
 ```
 $ curl http://sample-netcore-app/api/fibonacci?pos=3
 3
 ```
 
-- Dump Results
+#### Dump Results
 ```
 # perf script
 Failed to open /app-profile/sample-netcore-app.ni.exe, continuing without symbols
-Failed to open /usr/share/dotnet/shared/Microsoft.AspNetCore.App/2.2.3/Microsoft.AspNetCore.Mvc.Core.dll, continuing without symbols
-Failed to open /usr/share/dotnet/shared/Microsoft.AspNetCore.App/2.2.3/Microsoft.AspNetCore.Routing.dll, continuing without symbols
-Failed to open /usr/share/dotnet/shared/Microsoft.AspNetCore.App/2.2.3/Microsoft.AspNetCore.HostFiltering.dll, continuing without symbols
-Failed to open /usr/share/dotnet/shared/Microsoft.AspNetCore.App/2.2.3/Microsoft.AspNetCore.Hosting.dll, continuing without symbols
-Failed to open /usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.3/System.Private.CoreLib.dll, continuing without symbols
-Failed to open /usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.3/libcoreclr.so, continuing without symbols
-Failed to open /lib/ld-musl-x86_64.so.1, continuing without symbols
-dotnet 17273 [000] 1761930.225777: probe_sample:abs_1920: (7f784eea1920)
+Failed to open /usr/share/dotnet/shared/Microsoft.AspNetCore.App/2.2.5/Microsoft.AspNetCore.Mvc.Core.dll, continuing without symbols
+Failed to open /usr/share/dotnet/shared/Microsoft.AspNetCore.App/2.2.5/Microsoft.AspNetCore.Routing.dll, continuing without symbols
+Failed to open /usr/share/dotnet/shared/Microsoft.AspNetCore.App/2.2.5/Microsoft.AspNetCore.HostFiltering.dll, continuing without symbols
+Failed to open /usr/share/dotnet/shared/Microsoft.AspNetCore.App/2.2.5/Microsoft.AspNetCore.Hosting.dll, continuing without symbols
+Failed to open /usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.5/System.Private.CoreLib.dll, continuing without symbols
+Failed to open /lib/x86_64-linux-gnu/libpthread-2.24.so, continuing without symbols
+dotnet 29638 [000] 930393.538484: probe_sample:abs_1920: (7f8ccc5a1920)
                     1920 [unknown] (/app-profile/sample-netcore-app.ni.exe)
-                  1239e3 [unknown] (/usr/share/dotnet/shared/Microsoft.AspNetCore.App/2.2.3/Microsoft.AspNetCore.Mvc.Core.dll)
-                  132f12 [unknown] (/usr/share/dotnet/shared/Microsoft.AspNetCore.App/2.2.3/Microsoft.AspNetCore.Mvc.Core.dll)
-            7f7854aa5c6b [unknown] (/tmp/perf-31012.map)
-            7f7854aa5bf9 [unknown] (/tmp/perf-31012.map)
+                  123c93 [unknown] (/usr/share/dotnet/shared/Microsoft.AspNetCore.App/2.2.5/Microsoft.AspNetCore.Mvc.Core.dll)
+                  1331c2 [unknown] (/usr/share/dotnet/shared/Microsoft.AspNetCore.App/2.2.5/Microsoft.AspNetCore.Mvc.Core.dll)
+            7f8cd21d0bbb void [System.Private.CoreLib] System.Runtime.CompilerServices.AsyncMethodBuilderCore::Start(!!0&)+0x3b (/tmp/perf-247.map)
+            7f8cd21d0b49 instance class [netstandard]System.Threading.Tasks.Task [Microsoft.AspNetCore.Mvc.Core] Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker::Invoke
+                   f11f2 [unknown] (/usr/share/dotnet/shared/Microsoft.AspNetCore.App/2.2.5/Microsoft.AspNetCore.Mvc.Core.dll)
+                  132c64 [unknown] (/usr/share/dotnet/shared/Microsoft.AspNetCore.App/2.2.5/Microsoft.AspNetCore.Mvc.Core.dll)
 ...
 ```
-The call stack is currently quite bad.  We might be able to improve this by running crossgen on dependent dlls and using mapgen to merge them into the perfmap. 
+The call stack is currently quite bad.  We might be able to improve this by running crossgen on dependent dlls and using mapgen to merge them into the perfmap.  There is definitely [work to be done](../../todo) in this area.
 
-### Integer Parameters
+#### Integer Parameters
 Parameters can be recorded by understanding which registers are used to pass various parameter types.  See System V AMD64 ABI in https://en.wikipedia.org/wiki/X86_calling_conventions.  
 
 Also, even though it's for kprobes, this (https://www.kernel.org/doc/Documentation/trace/kprobetrace.txt) is the best document I can find which shows how to request and format registers and memory locations.
@@ -78,12 +81,6 @@ dotnet 22346 [000] 1762828.667743: probe_sample:abs_1920: (7f784eea1920 <- 7f785
 ```
 
 ### String Parameters
-
-Identify the function to profile
-```
-# cat /tmp/sample-netcore-app.ni.\{d2e97439-0da1-4364-a46e-21d41f3d9078\}.map | grep calculateEcho
-0000000000021900 9 instance string [sample-netcore-app] sample_netcore_app.Providers.EchoProvider::calculateEchoValue(string)
-```
 
 Through trial and error I have found that the netcore string's length is a 32 bit int stored 8 bytes offset from the string pointer.  Note that we are using `(%si)` to dereference the value in RSI because this is a string type.  We are also pulling 128 bits of the string itself in two 64 bit chunks.
 
