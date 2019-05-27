@@ -7,7 +7,7 @@ The following guide will walk you through using these tools to gather events and
 Check out these guides on [cpu profiling](../cpu-profiling) and [static-tracepoints](../static-tracepoints) without using PerfView.
 
 ## Run your netcore app in K8s
-Create your pod with a [debugging sidecar](https://cloud.docker.com/repository/docker/joeelliott/netcore-debugging-tools/).  The rest of this guide will use [perfcollect.yaml](./perfcollect.yaml) which runs a sidecar next to a simple [sample app](https://github.com/joe-elliott/sample-netcore-app).
+Create your pod with a [debugging sidecar](https://hub.docker.com/r/joeelliott/netcore-debugging-tools).  The rest of this guide will use [perfcollect.yaml](./perfcollect.yaml) which runs a sidecar next to a simple [sample app](https://github.com/joe-elliott/sample-netcore-app).
 
 #### Environment Variables
 

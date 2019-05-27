@@ -9,7 +9,7 @@ Most information pulled from:
 - [Flamegraphs](https://github.com/brendangregg/FlameGraph)
 
 ## Run your netcore app in K8s
-Create your pod with a [debugging sidecar](https://cloud.docker.com/repository/docker/joeelliott/netcore-debugging-tools/).  The rest of this guide will use [profiling.yaml](./profiling.yaml) which runs a sidecar next to a simple [sample app](https://github.com/joe-elliott/sample-netcore-app).
+Create your pod with a [debugging sidecar](https://hub.docker.com/r/joeelliott/netcore-debugging-tools).  The rest of this guide will use [profiling.yaml](./profiling.yaml) which runs a sidecar next to a simple [sample app](https://github.com/joe-elliott/sample-netcore-app).
 
 #### Environment Variables
 Set the following environment variables for your main process.

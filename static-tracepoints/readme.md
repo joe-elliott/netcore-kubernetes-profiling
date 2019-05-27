@@ -5,7 +5,7 @@ Recording static tracepoints produced by the netcore framework is actually quite
 If you are interested in both profiling and recording LTTng events see [perfcollect](../perfcollect).  This documentation will walk you through generating data for the PerfView utility.
 
 ## Run your netcore app in K8s
-Create your pod with a [debugging sidecar](https://cloud.docker.com/repository/docker/joeelliott/netcore-debugging-tools/).  The rest of this guide will use [static-tracepoints.yaml](./static-tracepoints.yaml) which runs a sidecar next to a simple [sample app](https://github.com/joe-elliott/sample-netcore-app).
+Create your pod with a [debugging sidecar](https://hub.docker.com/r/joeelliott/netcore-debugging-tools).  The rest of this guide will use [static-tracepoints.yaml](./static-tracepoints.yaml) which runs a sidecar next to a simple [sample app](https://github.com/joe-elliott/sample-netcore-app).
 
 
 #### Environment Variables
