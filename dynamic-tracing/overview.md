@@ -56,10 +56,10 @@ root@sample-netcore-app:~# cat /proc/112/maps | grep sample
 
 Choose the appropriate section from the above four.  The correct section will both be executable and will also contain the address we discovered above (0x21900 in our case).
 
-The first section is not executable and contains offsets 0x00000->0x10000.
-The second section is not executable and contains offsets 0x10000->0x20000.
-The third section is executable and contains offsets 0x20000->0x30000.  This is the correct section!
-The fourth section is not executable and contains offsets 0x30000->0x40000 (See Notes below).  
+- The first section is not executable and contains offsets 0x00000->0x10000.  
+- The second section is not executable and contains offsets 0x10000->0x20000.  
+- The third section is executable and contains offsets 0x20000->0x30000.  This is the correct section!  
+- The fourth section is not executable and contains offsets 0x30000->0x40000 (See Notes below).  
 
 Once you have all of the above values you can caluclate the offset using the following calculation:
 ```
