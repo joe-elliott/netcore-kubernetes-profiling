@@ -1,6 +1,6 @@
 # dynamic-tracing-kubernetes
 
-This guide will take you through setting up a pod to be dynamically tracing in Kubernetes using a sidecar.  See [dynamic-tracing.yaml](./dynamic-tracing.yaml) for the end product.  It executes a fairly intimidating configmap at startup to generate a native image.  See [the overview](./overview.md) for a description of what it does.
+This guide will take you through setting up a pod to be dynamically traced in Kubernetes using a sidecar.  See [dynamic-tracing.yaml](./dynamic-tracing.yaml) for the end product.  It executes a fairly intimidating configmap at startup to generate a native image.  See [the overview](./overview.md) for a description of what it does.
 
 #### Environment Variables
 Set the following environment variables for your main process.
@@ -14,7 +14,7 @@ env:
 `COMPlus_PerfMapEnabled` creates a perf map in `/tmp` that perf can read to symbolicate stack traces. 
 
 #### Liveness Probe
-If you have a liveness probe you will want to increase the `initialDelaySeconds`.  The startup script can take awhile to run.  Example below.
+If you have a liveness probe you will want to increase the `initialDelaySeconds`.  The startup script can take awhile to run.
 
 ```
 livenessProbe:
