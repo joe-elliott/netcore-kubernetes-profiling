@@ -24,6 +24,8 @@ Previously this repo was focused on executing these techniques from the node the
 
 ## todo
 
+- Review external links
+  - Sasha Goldstein's work is all 404ing?
 - split off todo list
 - add animated console thing
 - include info on the main page about natively profiling

@@ -6,7 +6,7 @@ Information about dynamically tracing netcore applications is sparse and sometim
 - [Dynamic Tracing of .NET Core Methods](https://blogs.microsoft.co.il/sasha/2018/02/08/dynamic-tracing-of-net-core-methods/)
 - [perf Examples](http://www.brendangregg.com/perf.html)
 
-The below notes review generally how to dynamically trace a netcore application.  See [this guide](./kubernetes.md) for a drop in method of 
+The below notes review generally how to dynamically trace a netcore application.  See [this guide](./kubernetes.md) for a drop in method of dynamically tracing in Kubernetes from a sidecar.
 
 ### make a dotnet thing
 ```
@@ -26,11 +26,11 @@ After you get a hold of the appropriate crossgen run the following commands. The
 ./crossgen /Platform_Assemblies_Paths bin /CreatePerfMap /tmp bin/app.ni.exe
 ```
 
-Do the above for every dll you want to place probes on.
+Do the above for every dll you want to place probes on.  Presumably you can place probes on other dlls, but so far I have only done this with the primary dll or exe.
 
 ### Find the address to trace
 
-Follow the instructions [here](https://blogs.microsoft.co.il/sasha/2018/02/08/dynamic-tracing-of-net-core-methods/) to calculate the address to place a probe at.  You will use the the native image perf maps in `/tmp` and the process memory map located at `/proc/<pid>/maps`.
+These [instructions](https://blogs.microsoft.co.il/sasha/2018/02/08/dynamic-tracing-of-net-core-methods/) to calculate the address to place a probe at.  You will use the the native image perf maps in `/tmp` and the process memory map located at `/proc/<pid>/maps`.
 
 The helper script [calc-offsets.py](./calc-offsets.py) is also provided.
 
