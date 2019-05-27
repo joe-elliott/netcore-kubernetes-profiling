@@ -9,13 +9,13 @@ Information about dynamically tracing netcore applications is sparse and sometim
 
 The below notes review generally how to dynamically trace a netcore application.  See [this guide](./kubernetes.md) for a drop in method of dynamically tracing in Kubernetes from a sidecar.
 
-### make a dotnet thing
+#### make a dotnet thing
 ```
 ./dotnet new console
 ./dotnet publish . -o ./bin --self-contained --runtime linux-x64
 ```
 
-### generate native images using crossgen
+#### generate native images using crossgen
 Crossgen is available in the appropriate runtime netcore nuget package.  For instance if you have a 2.2.2 netcore app running on the `linux-musl-x64` runtime then you would download the following package.  Unzip the package and look in the `./tools` directory to find crossgen.
 
 https://www.nuget.org/packages/runtime.linux-musl-x64.Microsoft.NETCore.App/2.2.2
@@ -29,7 +29,7 @@ After you get a hold of the appropriate crossgen run the following commands. The
 
 Do the above for every dll you want to place probes on.  Presumably you can place probes on other dlls, but so far I have only done this with the primary dll or exe.
 
-### Find the address to trace
+#### Find the address to trace
 
 To place a probe we have to find the offset into the native image.  You will use the the native image perf maps in `/tmp` and the process memory map located at `/proc/<pid>/maps`.
 
@@ -72,7 +72,7 @@ In our case
 
 *Note*:  I'm honestly not sure how the SectionOffset works into the above calculations.  The third column is an offset into the file (SectionOffset) that was passed when mmap was called.  I've never had this land on the same section as the executable to really test how they impact calculating the offset for dynamic tracing.  [calc-offsets.py](../images/calc-offsets.py) uses the original calculations provided by Sasha Goldstein.
 
-### Add a probe, trace it, view it and remove
+#### Add a probe, trace it, view it and remove
 
 ```
 perf probe -x ./bin/app.ni.exe --add 0x1900
@@ -81,11 +81,11 @@ perf script
 perf probe --del=*
 ```
 
-### Next Steps
+#### Next Steps
 
 See [probes](./probes.md) for more information about the kinds of probes you can place.  This document has examples of using both perf and bcc to place dynamic probes on [this app](https://github.com/joe-elliott/sample-netcore-app)
 
-### calc-offsets.py
+#### calc-offsets.py
 
 The helper script [calc-offsets.py](../images/calc-offsets.py) is provided to perform the above calculations automatically.
 

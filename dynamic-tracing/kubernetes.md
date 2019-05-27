@@ -77,5 +77,5 @@ securityContext:
   privileged: true
 ```
 
-### Next Steps
+## Next Steps
 See [probes](./probes.md) for more information about the kinds of probes you can place.  This document has examples of using both perf and bcc to place dynamic probes on [this app](https://github.com/joe-elliott/sample-netcore-app)
