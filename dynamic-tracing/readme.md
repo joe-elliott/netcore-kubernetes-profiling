@@ -1,6 +1,6 @@
 # dynamic-tracing
 
-Dynamic tracing allows instrumentation of code without recompiling.  The following guides show how to generally perform dynamic tracing with netcore as well as specific datails of how to trace an application running in Kubernetes from the host.
+Dynamic tracing allows instrumentation of code without recompiling.  The following guides show how to generally perform dynamic tracing with netcore as well as specific details of how to trace an application running in Kubernetes from a sidecar.
 
 - [Overview](./overview.md)
   General guide on how to perform dynamic tracing with netcore.
