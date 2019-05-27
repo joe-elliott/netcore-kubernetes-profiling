@@ -24,6 +24,9 @@ Previously this repo was focused on executing these techniques from the node the
 
 ## todo
 
+- split off todo list
+- add animated console thing
+- include info on the main page about natively profiling
 - dynamic tracing
    - documentation cleanup
    - switch to sidecar

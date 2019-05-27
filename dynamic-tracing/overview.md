@@ -1,12 +1,12 @@
 # dynamic-tracing
 
-WIP documentation and scripts for dynamic tracing of netcore apps.  Most information pulled from:
+Information about dynamically tracing netcore applications is sparse and sometimes incorrect.  There is definitely still work to be done, but the below steps are a very good start.  Most of the information contained in this document was pulled from:
 
 - [Using CrossGen to Create Native Images](https://github.com/dotnet/coreclr/blob/master/Documentation/building/crossgen.md)
 - [Dynamic Tracing of .NET Core Methods](https://blogs.microsoft.co.il/sasha/2018/02/08/dynamic-tracing-of-net-core-methods/)
 - [perf Examples](http://www.brendangregg.com/perf.html)
 
-The below very rough notes are an outline of how I have successfully traced netcore applications running on Linux.  I am currently working on expanding this to be a drop in method for dynamic tracing of methods of any Kubernetes application.
+The below notes review generally how to dynamically trace a netcore application.  See [this guide](./kubernetes.md) for a drop in method of 
 
 ### make a dotnet thing
 ```
