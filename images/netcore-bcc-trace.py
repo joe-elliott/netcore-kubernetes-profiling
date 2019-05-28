@@ -71,7 +71,13 @@ def generateBPF(type, maxLength, isReturn):
 bpf = generateBPF(args.type, args.len, args.ret)
 b = BPF(text=bpf)
 
-if args.ret:
-    b.attach_uretprobe(name=args.nativeImagePath, addr=args.methodOffset, fn_name="trace").trace_print()
-else:
-    b.attach_uprobe(name=args.nativeImagePath, addr=args.methodOffset, fn_name="trace").trace_print()
+print('Begin tracing.  Hit Ctrl+C to exit.')
+
+try:
+    if args.ret:
+        b.attach_uretprobe(name=args.nativeImagePath, addr=args.methodOffset, fn_name="trace").trace_print()
+    else:
+        b.attach_uprobe(name=args.nativeImagePath, addr=args.methodOffset, fn_name="trace").trace_print()
+except KeyboardInterrupt:
+    print('Exiting...')
+
