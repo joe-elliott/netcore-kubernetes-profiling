@@ -23,25 +23,30 @@ def generateBPF(type, maxLength, isReturn):
 
     if type == 'int':
         if isReturn: 
-            bpf += 'bpf_trace_printk("trace %d\\n", PT_REGS_RC(ctx));'
+            bpf += 'bpf_trace_printk("val %d\\n", PT_REGS_RC(ctx));'
         else:
-            bpf += 'bpf_trace_printk("trace %d\\n", PT_REGS_PARM2(ctx));'
+            bpf += 'bpf_trace_printk("val %d\\n", PT_REGS_PARM2(ctx));'
     elif type == 'str':
         # print a string up to maxLength characters
+        if isReturn: 
+            bpf += 'void *str = (void *)PT_REGS_RC(ctx);'
+        else:
+            bpf += 'void *str = (void *)PT_REGS_PARM2(ctx);'
+
         bpf += """
-            if( !ctx->si ) {
+            if( !str ) {
             bpf_trace_printk("null pointer\\n");
             return 0;
             }
 
             int len;
-            bpf_probe_read(&len, sizeof(len), (void *)(ctx->si + 8));
+            bpf_probe_read(&len, sizeof(len), (void *)(str + 8));
         """
 
         # create a large enough char buff
         bpf += """
             char buf[%d];
-            bpf_probe_read(buf, %d * sizeof(char), (void *)(ctx->si + 11));
+            bpf_probe_read(buf, %d * sizeof(char), (void *)(str + 11));
 
         """ % (maxLength * 2, maxLength * 2)
 
@@ -57,7 +62,7 @@ def generateBPF(type, maxLength, isReturn):
         """
 
     bpf += """
-       return 0;
+    return 0;
     }
     """
 
