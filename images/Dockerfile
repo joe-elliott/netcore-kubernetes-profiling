@@ -18,9 +18,7 @@ RUN    echo deb http://cloudfront.debian.net/debian testing main >> /etc/apt/sou
 ADD setup.sh \
     setup.4.15.sh \
     calc-offsets.py \
-    trace-hist.py \
-    trace-int.py \
-    trace-string.py \
+    netcore-bcc-trace.py \
     ./
 
 RUN chmod +x setup.sh setup.4.15.sh
