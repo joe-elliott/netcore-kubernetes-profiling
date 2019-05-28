@@ -1,8 +1,8 @@
 # perf
 
-This document shows step by step examples on using both perf to dynamically trace [this application](https://github.com/joe-elliott/sample-netcore-app) in your cluster with [the sidecar](https://hub.docker.com/r/joeelliott/netcore-debugging-tools) generated from this repo.
+This document shows step by step examples on using perf to dynamically trace [this application](https://github.com/joe-elliott/sample-netcore-app) in your cluster with [the sidecar](https://hub.docker.com/r/joeelliott/netcore-debugging-tools) generated from this repo.
 
-See [probes](../probes.md) for more information on setup.
+See [probes](../probes.md) for more information on setup.  After you have followed the steps there come back to learn how to use perf.
 
 #### Add the probe
 ```
