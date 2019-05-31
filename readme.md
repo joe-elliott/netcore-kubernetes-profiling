@@ -1,6 +1,16 @@
 # netcore-kubernetes-profiling
 
-This is my personal collection of notes, scripts and techniques developed to help debug live netcore applications running in Kubernetes.  I am not an expert on these subjects and attempt to credit my sources and inspirations as much as possible.  Feel free to ask questions, make corrections or even submit pull requests.
+This is my personal collection of notes, scripts and techniques developed to help debug live .NET Core applications.  All of these techniques were performed from a sidecar in Kubernetes.  If you are interested in profiling .NET Core applications running on Linux without Kubernetes then these guides still will contain a lot of useful information.
+
+Feel free to ask questions, suggest changes or submit pull requests.
+
+## Demo!
+
+The below dynamic tracing demo was performed on [this application](https://github.com/joe-elliott/sample-netcore-app) built with this [Dockerfile](https://github.com/joe-elliott/sample-netcore-app/blob/master/Dockerfile).  Even though this application was built normally and contains no special instrumentation we can still dynamically trace any method in the entire application using [bcc](https://github.com/iovisor/bcc).  In the following demo we will trace [calculateFibonacciValue](https://github.com/joe-elliott/sample-netcore-app/blob/master/Providers/FibonacciProvider.cs#L9) and [calculateEchoValue](https://github.com/joe-elliott/sample-netcore-app/blob/master/Providers/EchoProvider.cs#L9).
+
+![bcc demo](./dynamic-tracing-bcc.gif)
+
+Check out the below guides to get details on how to do this and more.
 
 ## Debugging techniques
 
@@ -10,7 +20,7 @@ This is my personal collection of notes, scripts and techniques developed to hel
   - Recording and viewing LTTng events
 - [perfcollect](./perfcollect)
   - Static Tracepoints and CPU Profiling
-- [dynamic tracing](dynamic-tracing)
+- [dynamic tracing](./dynamic-tracing)
   - Includes guides on using both perf events and bcc
 
 ## Other information

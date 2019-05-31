@@ -1,7 +1,5 @@
 ## todo
 
-- add animated console thing
-- include info on the main page about natively profiling
 - dynamic tracing
    - improve call stacks
      - https://github.com/dotnet/ILMerge
