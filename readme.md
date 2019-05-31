@@ -6,7 +6,7 @@ Feel free to ask questions, suggest changes or submit pull requests.
 
 ## Demo!
 
-The below dynamic tracing demo was performed on [this application](https://github.com/joe-elliott/sample-netcore-app) built with this [Dockerfile](https://github.com/joe-elliott/sample-netcore-app/blob/master/Dockerfile).  Even though this application was built normally and contains no special instrumentation we can still dynamically trace any method in the entire application using [bcc](https://github.com/iovisor/bcc).  In the following demo we will trace [calculateFibonacciValue](https://github.com/joe-elliott/sample-netcore-app/blob/master/Providers/FibonacciProvider.cs#L9) and [calculateEchoValue](https://github.com/joe-elliott/sample-netcore-app/blob/master/Providers/EchoProvider.cs#L9).
+The below dynamic tracing demo was performed on [this application](https://github.com/joe-elliott/sample-netcore-app) built with [this Dockerfile](https://github.com/joe-elliott/sample-netcore-app/blob/master/Dockerfile).  Even though this application was built normally and contains no special instrumentation we can still dynamically trace any method in the entire application using [bcc](https://github.com/iovisor/bcc).  In the following demo we will trace [calculateFibonacciValue](https://github.com/joe-elliott/sample-netcore-app/blob/master/Providers/FibonacciProvider.cs#L9) and [calculateEchoValue](https://github.com/joe-elliott/sample-netcore-app/blob/master/Providers/EchoProvider.cs#L9).
 
 ![bcc demo](./dynamic-tracing-bcc.gif)
 
