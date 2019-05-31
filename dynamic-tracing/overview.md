@@ -4,6 +4,7 @@ Information about dynamically tracing netcore applications is sparse and sometim
 
 - [Using CrossGen to Create Native Images](https://github.com/dotnet/coreclr/blob/master/Documentation/building/crossgen.md)
 - [Dynamic Tracing of .NET Core Methods](https://blogs.microsoft.co.il/sasha/2018/02/08/dynamic-tracing-of-net-core-methods/)
+  - Currently this link 404s, but leaving it here to document the work this is based on.  Hopefully, we will see it again one day.
 - [perf Examples](http://www.brendangregg.com/perf.html)
 - [proc maps](https://stackoverflow.com/questions/1401359/understanding-linux-proc-id-maps)
 

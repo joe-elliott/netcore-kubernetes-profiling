@@ -1,7 +1,5 @@
 ## todo
 
-- Review external links
-  - Sasha Goldstein's work is all 404ing?
 - add animated console thing
 - include info on the main page about natively profiling
 - dynamic tracing
