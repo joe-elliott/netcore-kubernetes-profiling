@@ -6,7 +6,7 @@ See [probes](../probes.md) for more information on setup.  After you have follow
 
 #### netcore-bcc-trace.py
 
-bcc is mostly amazing.  It allows for bpf programs to be run when dynamic tracepoints are hit.  (netcore-bcc-trace.py)[../../images/netcore-bcc-trace.py] is a utility I built to easily trace parameter and return values of functions.
+bcc is mostly amazing.  It allows for bpf programs to be run when dynamic tracepoints are hit.  [netcore-bcc-trace.py](../../images/netcore-bcc-trace.py) is a utility I built to easily trace parameter and return values of functions.
 
 Tracing `calculateFibonacciValue`:
 ```
@@ -16,7 +16,7 @@ root@sample-netcore-app:~# python netcore-bcc-trace.py /app-profile/sample-netco
           dotnet-3740  [001] .... 903899.770254: : val 30
 ```
 
-(netcore-bcc-trace.py)[../../images/netcore-bcc-trace.py] dynamically prints out the values passed into the traced method as it is being called.  In the above example the application was curled passing in the three values shown.
+[netcore-bcc-trace.py](../../images/netcore-bcc-trace.py) dynamically prints out the values passed into the traced method as it is being called.  In the above example the application was curled passing in the three values shown.
 
 Tracing `calculateEchoValue`:
 ```
