@@ -19,7 +19,7 @@ Check out the below guides to get details on how to do this and more.
 - [static tracepoints](./static-tracepoints)
   - Recording and viewing LTTng events
 - [perfcollect](./perfcollect)
-  - Static Tracepoints and CPU Profiling
+  - Static Tracepoints and CPU Profiling the Microsoft way
 - [dynamic tracing](./dynamic-tracing)
   - Includes guides on using both perf events and bcc
 
