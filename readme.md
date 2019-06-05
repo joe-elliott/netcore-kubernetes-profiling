@@ -21,7 +21,7 @@ Check out the below guides to get details on how to do this and more.
 - [perfcollect](./perfcollect)
   - Static Tracepoints and CPU Profiling the Microsoft way
 - [dynamic tracing](./dynamic-tracing)
-  - Includes guides on using perf events and bcc to trace any method in an application without instrumentation
+  - Perf events and BCC to trace any method in an application without instrumentation
 
 ## Other information
 
