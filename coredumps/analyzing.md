@@ -1,8 +1,4 @@
 ### Analyzing
-```
-apt-get update
-apt-get install lldb
-```
 
 ```
 lldb /usr/bin/dotnet --core /tmp/coredump.6

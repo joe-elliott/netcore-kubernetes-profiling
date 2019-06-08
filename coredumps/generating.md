@@ -49,19 +49,37 @@ On demand core dumps are useful when your application enters states you need to 
 - Your application is deadlocking and you want to see the stack traces of all threads.
 - Your application is consuming an unbounded amount of memory and you want to investigate the heap.
 
-To generate a core dump on demand we will use the `createdump` utility provided by Microsoft.  This application is located in `/usr/share/dotnet/shared/Microsoft.NETCore.App/<dotnet framework version>`.  Note that you will need the pid of the dotnet process.  Be warned that this will terminate the process.
+To generate a core dump on demand we will use the `createdump` utility provided by Microsoft.  This application is located in `/usr/share/dotnet/shared/Microsoft.NETCore.App/<dotnet framework version>`.  Note that you will need the pid of the dotnet process.
 
 ```
 # ps aux | grep dotnet
-root       151  0.4  3.7 11796640 77276 ?      SLsl 13:02   0:00 dotnet /app/sample-netcore-app.dll
+root       832  0.7  3.8 11927716 77536 ?      SLsl 13:26   0:00 dotnet /app/sample-netcore-app.dll
 
-/usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.5/createdump 151
-Writing minidump with heap to file /tmp/coredump.151
-Written 168382464 bytes (41109 pages) to core file
+# /usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.5/createdump 151
+Writing minidump with heap to file /tmp/coredump.832
+Written 168390656 bytes (41111 pages) to core file
+
+# ls -al /tmp/coredump*
+-rw-r--r-- 1 root root 168591360 Jun  8 13:29 /tmp/coredump.832
 ```
 
 #### On Unexpected Exception
+
+If your application is crashing due to an unexpected exception then coredumps will be generated automtically due to the environment variables set above `COMPlus_DbgEnableMiniDump` and `COMPlus_DbgMiniDumpName`  The [sample application](https://github.com/joe-elliott/sample-netcore-app) has an endpoint that calls [`Environment.FailFast()`](https://docs.microsoft.com/en-us/dotnet/api/system.environment.failfast?view=netcore-2.2) to force just such an unexpected exit.
+
+After connecting to the sidecar:
+
 ```
-   Environment.FailFast()
+# ps aux | grep dotnet
+root       151  0.1  4.0 11796900 83064 ?      SLsl 13:02   0:01 dotnet /app/sample-netcore-app.dll
+
+# curl http://localhost:8080/api/fail
+curl: (52) Empty reply from server
+
+# ls -al /tmp/coredump*
+-rw-r--r-- 1 root root 171085824 Jun  8 13:26 /tmp/coredump.151
 ```
 
+## Next Steps
+
+Now that you have generated a dump check out [this guide](./analyzing.md) for more information on analyzing it.
