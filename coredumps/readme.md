@@ -17,20 +17,31 @@ COMPlus_DbgEnableMiniDump=1
 COMPlus_DbgMiniDumpName='/tmp/coredump.%d'
 SIGKILL?
 
-#### Alternative methods
-```
-   kill -9
-   Environment.FailFast()
-   echo "/tmp/cores/core.%e.%p.%h.%t" > /proc/sys/kernel/core_pattern
-```
-
+#### On Demand
 ```
     kubectl exec -it -c profile-sidecar sample-netcore-app bash
+    cd /usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.5
     ./createdump 141
+```
+
+#### On crash
+```
+   Environment.FailFast()
 ```
 
 ### Parsing
 ```
 apt-get update
 apt-get install lldb
+```
+
+```
+lldb /usr/bin/dotnet --core /tmp/coredump.6
+plugin load /usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.5/libsosplugin.so
+setclrpath /usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.5
+```
+
+### Basic commands
+```
+sos Threads
 ```
