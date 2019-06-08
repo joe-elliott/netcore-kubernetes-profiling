@@ -20,30 +20,41 @@ env:
     value: "/tmp/coredump.%d"
 ```
 
-`COMPlus_DbgEnableMiniDump` creates a perf map in `/tmp` that perf can read to symbolicate stack traces.  
+`COMPlus_DbgEnableMiniDump` tells the netcore runtime to generate a coredump if the process exits unexpectedly.
 
-`COMPlus_DbgMiniDumpName` will force netcore runtime to be JITted.  This is normally not desirable, but it will cause the netcore runtime dll symbols to be included in the perf maps.  This will allow perf to gather symbols for both the runtime as well as your application.
+`COMPlus_DbgMiniDumpName` indicates the file to place the coredump in when the process exits unexpectedly.  We are placing it in `/tmp` so it is accessible in the sidecar.
 
 Another variable you could consider setting is `COMPlus_DbgMiniDumpType`.  `COMPlus_DbgMiniDumpType` allows you to change the information that is captured in the coredump.  See [here](https://github.com/dotnet/coreclr/blob/master/Documentation/botr/xplat-minidump-generation.md#configurationpolicy) for more information.  The default value of `MiniDumpWithPrivateReadWriteMemory ` has been sufficient to view threads, stack traces and explore the heap.
 
 #### shareProcessNamespace
 Setting `shareProcessNamespace` to true allows the sidecar to easily access the process you want to debug.
 
+#### Mount /tmp
+By sharing /tmp as an empty directory the debugging sidecar can easily access coredumps created when the application exits unexpectedly.
+
 ## Generate dump
 
-#### 
-COMPlus_DbgEnableMiniDump=1
-COMPlus_DbgMiniDumpName='/tmp/coredump.%d'
-SIGKILL?
+There are two different scenarios in which you'd generally like to generate a coredump.  See below for details on generating a dump on demand or when an application crashes.
+
+To begin exploring both cases exec into the sidecar.
+
+```
+kubectl exec -it -c profile-sidecar sample-netcore-app bash
+```
 
 #### On Demand
+
+On demand coredumps are useful when your application enters states you need to better understand that do not cause the application to crash.  E.g.
+
+- Your application is deadlocking and you want to see the stack traces of all threads.
+- Your application is consuming an unbounded amount of memory and you want to investigate the heap.
+
 ```
-    kubectl exec -it -c profile-sidecar sample-netcore-app bash
     cd /usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.5
     ./createdump 141
 ```
 
-#### On crash
+#### On Unexpected Exception
 ```
    Environment.FailFast()
 ```
