@@ -4,7 +4,7 @@ This guide will cover the basics of loading a netcore core dump in lldb and anal
 
 
 ## Loading the Dump
-If you follow [the previous guide](./generating.md) then you have a core dump in your `/tmp` directory generated via one means or another.
+If you follow [the previous guide](./generating.md) then you have a core dump in your `/tmp` directory generated one way or another.
 
 ```
 # ls /tmp/coredump*
@@ -12,7 +12,7 @@ If you follow [the previous guide](./generating.md) then you have a core dump in
 # lldb /usr/bin/dotnet --core /tmp/coredump.6
 ```
 
-After you are in lldb load the sos plugin and point it at the CLR.  This provides a set of commands that allow you to analyze the state of the managed application.  The rest of the guide will use commands enabled by this plugin.  Note that the location of libsosplugin.so and the CLR are framework version dependent.
+After you are in lldb, load the sos plugin and point it at the CLR.  The sos plugin provides a set of commands that allow you to analyze the state of the managed application.  The rest of the guide will use commands enabled by this plugin.  Note that the location of libsosplugin.so and the CLR are framework version dependent.
 
 ```
 (lldb) plugin load /usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.5/libsosplugin.so
@@ -20,7 +20,7 @@ After you are in lldb load the sos plugin and point it at the CLR.  This provide
 ```
 
 #### Getting help
-The sos plugin provides some basic help by running the `soshelp` command.  Always a good place to start.  See below for some basic guides on performing other tasks.
+The sos plugin provides some basic help by running the `soshelp` command.  Help is always a good place to start.  After you have run `soshelp` and reviewed the available commands see below for some basic guides on performing other tasks.
 
 #### Finding a Thrown Exception
 An unhandled exception is a common way for a application to unexpectedly crash.  In our case we forced the application to crash by calling [Environment.FailFast()](https://github.com/joe-elliott/sample-netcore-app/blob/master/Controllers/FailController.cs#L15).  Let's discover the exception that was thrown and inspect the call stack.
@@ -70,7 +70,7 @@ StackTraceString: <none>
 HResult: 80131506
 ```
 
-Finally, view the current callstack on the thread.  This should give us information about where the exception was called from.  In this case it clearly calls out the exception was called from `FailController::`
+Finally, view the current callstack on the thread.  This should give us information about where the exception was called from.  In this case it clearly calls out the exception was called from `FailController::Get` as expected.
 
 ```
 (lldb) sos ClrStack
@@ -159,7 +159,7 @@ IL_0015: ldarg.2
 IL_0016: ret 
 ```
 
-However, the most likely thing you're looking for is a path to a GCRoot.  This will give you information about why the object is still in memory which will help you diagnose memory leaks.  At this point I am unsure why some of the object names are "<error>" and how to correct this.
+However, the most likely thing you're looking for is a path to a GCRoot.  This will give you information about why the object is still in memory which will help you diagnose memory leaks.  At this point I am unsure why some of the object names are `<error>` and how to correct this.
 
 ```
 (lldb) sos GCRoot -all -nostacks 00007fc808277940
