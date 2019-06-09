@@ -22,6 +22,8 @@ Check out the below guides to get details on how to do this and more.
   - Static Tracepoints and CPU Profiling the Microsoft way
 - [dynamic tracing](./dynamic-tracing)
   - Perf events and BCC to trace any method in an application without instrumentation
+- [core dumps](./coredumps)
+  - Multiple methods for collecting and analyzing coredumps.
 
 ## Other information
 
