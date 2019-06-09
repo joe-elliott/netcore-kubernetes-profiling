@@ -12,6 +12,9 @@
         - support parameters besides the first
         - histogram support?
 - core dumps
+  - understand why the GCRoot output is littered with `<error>`
+  - Attempt to install lldb-3.9?
+    - https://github.com/dotnet/coreclr/blob/master/Documentation/building/debugging-instructions.md
 - test these examples on other linux distros and kernel versions
 - build sidecars for other netcore versions 
 
