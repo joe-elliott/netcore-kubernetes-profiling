@@ -1,4 +1,4 @@
-# coredumps
+# core dumps
 
 Taking a core dump allows analysis of the state of the application at the time the dump was taken.  This is useful to investigate the number and state of your application threads, viewing last thrown exceptions, exploring the objects on the heap and more.
 
