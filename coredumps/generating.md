@@ -1,6 +1,6 @@
 # Generating Core Dumps
 
-This guide will walk you through capturing a core dump of a netcore application running in Kubernetes cluster.  The tools are designed to run in a sidecar next to the pod you want to debug.
+This guide will walk you through capturing a core dump of a netcore application running in Kubernetes.  The tools are designed to run in a sidecar next to the pod you want to debug.
 
 Most information pulled from:
 
@@ -22,9 +22,9 @@ env:
 
 `COMPlus_DbgEnableMiniDump` tells the netcore runtime to generate a core dump if the process exits unexpectedly.
 
-`COMPlus_DbgMiniDumpName` indicates the file to place the core dump in when the process exits unexpectedly.  We are placing it in `/tmp` so it is accessible in the sidecar.
+`COMPlus_DbgMiniDumpName` designates the file to place the core dump in when the process exits unexpectedly.  We are placing it in `/tmp` so it is accessible in the sidecar.
 
-Another variable you could consider setting is `COMPlus_DbgMiniDumpType`.  `COMPlus_DbgMiniDumpType` allows you to change the information that is captured in the core dump.  See [here](https://github.com/dotnet/coreclr/blob/master/Documentation/botr/xplat-minidump-generation.md#configurationpolicy) for more information.  The default value of `MiniDumpWithPrivateReadWriteMemory ` has been sufficient to view threads, stack traces and explore the heap.
+Another variable you could consider setting is `COMPlus_DbgMiniDumpType`.  `COMPlus_DbgMiniDumpType` allows you to change the information that is captured in the core dump.  See [here](https://github.com/dotnet/coreclr/blob/master/Documentation/botr/xplat-minidump-generation.md#configurationpolicy) for more information.  The default value of `MiniDumpWithPrivateReadWriteMemory` has been sufficient to view threads, stack traces and explore the heap.
 
 #### shareProcessNamespace
 Setting `shareProcessNamespace` to true allows the sidecar to easily access the process you want to debug.
@@ -55,7 +55,7 @@ To generate a core dump on demand we will use the `createdump` utility provided 
 # ps aux | grep dotnet
 root       832  0.7  3.8 11927716 77536 ?      SLsl 13:26   0:00 dotnet /app/sample-netcore-app.dll
 
-# /usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.5/createdump 151
+# /usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.5/createdump 832
 Writing minidump with heap to file /tmp/coredump.832
 Written 168390656 bytes (41111 pages) to core file
 
@@ -65,7 +65,7 @@ Written 168390656 bytes (41111 pages) to core file
 
 #### On Unexpected Exception
 
-If your application is crashing due to an unexpected exception then coredumps will be generated automtically due to the environment variables set above `COMPlus_DbgEnableMiniDump` and `COMPlus_DbgMiniDumpName`  The [sample application](https://github.com/joe-elliott/sample-netcore-app) has an endpoint that calls [`Environment.FailFast()`](https://docs.microsoft.com/en-us/dotnet/api/system.environment.failfast?view=netcore-2.2) to force just such an unexpected exit.
+If your application is crashing due to an unexpected exception then coredumps will be generated automtically due to the environment variables set above (`COMPlus_DbgEnableMiniDump` and `COMPlus_DbgMiniDumpName`).  The [sample application](https://github.com/joe-elliott/sample-netcore-app) has an endpoint that calls [`Environment.FailFast()`](https://docs.microsoft.com/en-us/dotnet/api/system.environment.failfast?view=netcore-2.2) to force just such an unexpected exit.
 
 After connecting to the sidecar:
 
