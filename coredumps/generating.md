@@ -1,4 +1,4 @@
-# coredumps
+# Generating Core Dumps
 
 This guide will walk you through capturing a core dump of a netcore application running in Kubernetes cluster.  The tools are designed to run in a sidecar next to the pod you want to debug.
 
