@@ -34,13 +34,13 @@ By sharing /tmp as an empty directory the debugging sidecar can easily access co
 
 ## Generate dump
 
-There are two different scenarios in which you'd generally like to generate a core dump.  See below for details on generating a dump on demand or when an application crashes.
-
-To begin exploring both cases exec into the sidecar.
+To generate a dump file first exec into the sidecar.
 
 ```
 kubectl exec -it -c profile-sidecar sample-netcore-app bash
 ```
+
+There are two different scenarios in which you'd generally like to generate a core dump.  See below for details on generating a dump on demand or when an application crashes.
 
 #### On Demand
 
@@ -65,7 +65,7 @@ Written 168390656 bytes (41111 pages) to core file
 
 #### On Unexpected Exception
 
-If your application is crashing due to an unexpected exception then coredumps will be generated automtically due to the environment variables set above (`COMPlus_DbgEnableMiniDump` and `COMPlus_DbgMiniDumpName`).  The [sample application](https://github.com/joe-elliott/sample-netcore-app) has an endpoint that calls [`Environment.FailFast()`](https://docs.microsoft.com/en-us/dotnet/api/system.environment.failfast?view=netcore-2.2) to force just such an unexpected exit.
+If your application is crashing due to an unexpected exception then coredumps will be generated automatically due to the environment variables set above (`COMPlus_DbgEnableMiniDump` and `COMPlus_DbgMiniDumpName`).  The [sample application](https://github.com/joe-elliott/sample-netcore-app) has an endpoint that calls [`Environment.FailFast()`](https://docs.microsoft.com/en-us/dotnet/api/system.environment.failfast?view=netcore-2.2) to force just such an unexpected exit.
 
 After connecting to the sidecar:
 
