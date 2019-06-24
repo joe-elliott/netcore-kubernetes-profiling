@@ -161,6 +161,8 @@ IL_0016: ret
 
 However, the most likely thing you're looking for is a path to a GCRoot.  This will give you information about why the object is still in memory which will help you diagnose memory leaks.  At this point I am unsure why some of the object names are `<error>` and how to correct this.
 
+**Note:**  Since this guide was written I have discovered the [dotnet dump](https://github.com/dotnet/diagnostics/blob/master/documentation/dotnet-dump-instructions.md) tool.  I believe that some of the issues with the gcroot analysis are because lldb in the debian container is version 7.0.  Using the [dotnet dump](https://github.com/dotnet/diagnostics/blob/master/documentation/dotnet-dump-instructions.md) tool might significantly improve analysis.
+
 ```
 (lldb) sos GCRoot -all -nostacks 00007fc808277940
 HandleTable:
