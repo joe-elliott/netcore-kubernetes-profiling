@@ -15,3 +15,7 @@ The above guides are dependent on being able to install lldb 3.9 in container.  
 
 https://github.com/dotnet/diagnostics/blob/master/documentation/dotnet-dump-instructions.md
 
+Note that dotnet dump cannot create dumps of .NET Core applications before 3.0.  We still need to use createdump for 2.2 and earlier.
+
+- [Alpine](./alpine.md)
+  - Alpine specific notes.
