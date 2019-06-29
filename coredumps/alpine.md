@@ -2,8 +2,7 @@
 
 This guide is meant to complement the [generating](./generating.md) and [analyzing](./analyzing.md) guides already available.  These instructions are specific to Alpine and have been tested using [coredumps.alpine.yaml](./coredumps.alpine.yaml)
 
-## createdump bug
-Unfortunately the createdump utility is broken in Alpine containers.  See the below thread for details.  Due to this bug we will be forced to generate a full coredump.
+Unfortunately the `createdump` utility is broken in Alpine containers.  See the below thread for details.  Due to this bug we will be forced to generate a full coredump.
 
 https://github.com/dotnet/coreclr/issues/24599
 

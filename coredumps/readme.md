@@ -11,9 +11,7 @@ The following guides show how to generate and analyze the core dump of an applic
 
 ### Alternative Methods
 
-The above guides are dependent on being able to install lldb 3.9 in container.  If this is not possible then Microsoft has provided a dotnet dump tool that does not rely on a native debugger.
-
-https://github.com/dotnet/diagnostics/blob/master/documentation/dotnet-dump-instructions.md
+The above guides are dependent on being able to install lldb 3.9 in container.  If this is not possible then Microsoft has provided a [dotnet dump](https://github.com/dotnet/diagnostics/blob/master/documentation/dotnet-dump-instructions.md) tool that does not rely on a native debugger.
 
 Note that dotnet dump cannot create dumps of .NET Core applications before 3.0.  We still need to use createdump for 2.2 and earlier.
 
