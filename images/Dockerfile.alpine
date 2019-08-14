@@ -14,4 +14,4 @@ RUN    echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/reposi
                perl \
     && rm -rf /var/cache/apk/* \
     && git clone --depth=1 https://github.com/BrendanGregg/FlameGraph \
-    && dotnet tool install -g dotnet-dump --version 1.0.4-preview6.19311.1
+    && dotnet tool install -g dotnet-dump --version 3.0.0-preview7.19365.2
