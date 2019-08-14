@@ -23,7 +23,7 @@ spec:
     - mountPath: /tmp
       name: tmp
   - name: profile-sidecar
-    image: joeelliott/netcore-debugging-tools:v0.0.13-2.2.5-alpine
+    image: joeelliott/netcore-debugging-tools:v0.0.14-2.2.5-alpine
     imagePullPolicy: IfNotPresent
     securityContext:
       privileged: true
