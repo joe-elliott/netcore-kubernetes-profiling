@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.2.5
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2.401-stretch
 
 WORKDIR /root
 
@@ -15,6 +15,7 @@ RUN    echo deb http://cloudfront.debian.net/debian testing main >> /etc/apt/sou
     && git clone --depth=1 https://github.com/BrendanGregg/FlameGraph \
     && curl -OL https://aka.ms/perfcollect \
     && chmod +x ./perfcollect
+    && dotnet tool install -g dotnet-dump --version 3.0.0-preview7.19365.2
 
 ADD setup.sh \
     setup.4.15.sh \
