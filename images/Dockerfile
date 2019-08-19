@@ -14,7 +14,7 @@ RUN    echo deb http://cloudfront.debian.net/debian testing main >> /etc/apt/sou
     && rm -rf /var/lib/apt/lists/* \
     && git clone --depth=1 https://github.com/BrendanGregg/FlameGraph \
     && curl -OL https://aka.ms/perfcollect \
-    && chmod +x ./perfcollect
+    && chmod +x ./perfcollect \
     && dotnet tool install -g dotnet-dump --version 3.0.0-preview7.19365.2
 
 ADD setup.sh \
