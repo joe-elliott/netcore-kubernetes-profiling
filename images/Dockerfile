@@ -2,6 +2,8 @@ FROM mcr.microsoft.com/dotnet/core/sdk:2.2.401-stretch
 
 WORKDIR /root
 
+ENV PATH="${PATH}:/root/.dotnet/tools"
+
 RUN    echo deb http://cloudfront.debian.net/debian testing main >> /etc/apt/sources.list \
     && apt-get update \
     && apt-get install -y \
