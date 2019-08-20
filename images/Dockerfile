@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2.401-stretch
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2.300-stretch
 
 WORKDIR /root
 
