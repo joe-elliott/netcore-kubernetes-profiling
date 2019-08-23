@@ -36,3 +36,7 @@ Check out the below guides to get details on how to do this and more.
 
 Previously this repo was focused on executing these techniques from the node the application was running on.  If you are interested in that approach you can check it out [here](https://github.com/joe-elliott/netcore-kubernetes-profiling/tree/54bacfeecb33de6bbc590768af9c276efd1b4e4c).
 
+## Presentations
+
+- [CodePaLousa 2019 Slides](https://docs.google.com/presentation/d/1-OJtTSEGEWxYAIHhKDoociKJXL7CFH8BPl6xJDATSuI/edit?usp=sharing)
+  - This content was partially presented at CodePaLousa 2019.  The session was focused on Linux .NET Core debugging but drew from this repo.  The session was [streamed](https://www.facebook.com/CodePaLOUsa/videos/487782252038255/) by [Switcher Studios](https://www.switcherstudio.com/).
