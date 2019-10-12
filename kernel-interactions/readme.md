@@ -14,6 +14,16 @@ echo deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/201802
 
 Using this technique everything except dynamic tracing seems to work.
 
+## Kernel 4.14
+
+Similar to 4.15
+
+```
+echo deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/20180222 sid main contrib >> /etc/apt/sources.list
+apt-get update
+apt-get install linux-tools-4.14
+```
+
 ## Kernel 4.9
 
 After running `setup.sh` run the following to install the correct version of perf.
