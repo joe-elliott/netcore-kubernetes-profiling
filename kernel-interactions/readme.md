@@ -31,3 +31,7 @@ After running `setup.sh` run the following to install the correct version of per
 ```
 apt-get install linux-perf-4.9
 ```
+
+# Linux Headers
+
+Currently setup.sh attempts to pull the appropriate Linux headers.  I believe this will only be successful in a small number of scenarios in which the container repos happen to have the appropriate headers for the host.  Commented out lines have been added to [dynamic-tracing.yaml](../dynamic-tracing/dynamic-tracing.yaml) that successfully mount Linux headers in GKE on Ubuntu nodes and allow bpf/bcc dynamic tracing.  With additional testing this may become the preferred method.

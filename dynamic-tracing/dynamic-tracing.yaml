@@ -39,6 +39,12 @@ spec:
       name: tmp
     - mountPath: /sys
       name: sys
+  #  - mountPath: /usr/src
+  #    name: modules 
+  #    readOnly: true
+  #  - mountPath: /lib/modules
+  #    name: headers
+  #    readOnly: true
   volumes:
   - name: tmp
     emptyDir: {}
@@ -52,6 +58,14 @@ spec:
       path: /sys
       type: Directory
     name: sys
+  # - hostPath:
+  #     path: /usr/src
+  #     type: Directory
+  #   name: modules
+  # - hostPath:
+  #     path: /lib/modules
+  #     type: Directory
+  #   name: headers
 ---
 apiVersion: v1
 kind: ConfigMap

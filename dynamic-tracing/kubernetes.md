@@ -77,5 +77,27 @@ securityContext:
   privileged: true
 ```
 
+#### Mount host headers
+
+The `setup.sh` script will attempt to pull linux headers when it is run, but in a lot of cases this will fail to find the correct linux headers in the repos setup in the sidecar container.  The following lines appear commented out in the `dynamic-tracing.yaml` and have been confirmed to work in GKE with an Ubuntu node.  If you're having trouble with the setup.sh script pulling Linux headers try this approach.
+
+```
+- mountPath: /usr/src
+  name: modules 
+  readOnly: true
+- mountPath: /lib/modules
+  name: headers
+  readOnly: true
+...
+- hostPath:
+    path: /usr/src
+    type: Directory
+  name: modules
+- hostPath:
+    path: /lib/modules
+    type: Directory
+  name: headers
+```
+
 ## Next Steps
 See [probes](./probes.md) for more information about the kinds of probes you can place.  This document has examples of using both perf and bcc to place dynamic probes on [this app](https://github.com/joe-elliott/sample-netcore-app)
