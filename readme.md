@@ -40,3 +40,5 @@ Previously this repo was focused on executing these techniques from the node the
 
 - [CodePaLousa 2019 Slides](https://docs.google.com/presentation/d/1-OJtTSEGEWxYAIHhKDoociKJXL7CFH8BPl6xJDATSuI/edit?usp=sharing)
   - The session was [streamed](https://www.facebook.com/CodePaLOUsa/videos/487782252038255/) by [Switcher Studios](https://www.switcherstudio.com/).  It only focused on Linux .NET Core debugging but used this repo as its source material.
+- [NA Kubecon 2019 Slides](./2019NAKubecon.pdf)
+  - This session focused specifically on the profiling and tracing techniques as executed from a sidecar. 
