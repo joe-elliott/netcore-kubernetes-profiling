@@ -19,6 +19,8 @@ env:
   value: "1"
 - name: COMPlus_ZapDisable
   value: "1"
+- name: COMPlus_ReadyToRun
+  value: "0"
 ```
 
 `COMPlus_EnableEventLog`  Instructs netcore to produce LTTng events. 
@@ -28,6 +30,8 @@ env:
 `COMPlus_ZapDisable` will force netcore runtime to be JITted.  This is normally not desirable, but it will cause the netcore runtime dll symbols to be included in the perf maps.  This will allow perf to gather symbols for both the runtime as well as your application.
 
 There are other ways to do this if you are interested. https://github.com/dotnet/coreclr/blob/master/Documentation/project-docs/linux-performance-tracing.md#resolving-framework-symbols
+
+`COMPlus_ReadyToRun` will prevent the .NETCore runtime from using pre-compiled images.  This can also be used to increase symbol coverage.  Some details [here](https://docs.microsoft.com/en-us/visualstudio/debugger/jit-optimization-and-debugging?view=vs-2019#limitations-of-the-suppress-jit-optimization-option).
 
 #### Mount /tmp
 By sharing /tmp as an empty directory the debugging sidecar can easily access perf maps created by the netcore application.
